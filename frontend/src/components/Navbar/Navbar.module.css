@@ -1,0 +1,3 @@
+.navbar {
+  @apply font-bold text-white bg-gray-800;
+}
