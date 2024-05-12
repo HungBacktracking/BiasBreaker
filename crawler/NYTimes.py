@@ -71,17 +71,19 @@ def processing(driver, articles, url):
     
         
         driver.get(info_link)
-        src_detail = driver.page_source
-        soup = BeautifulSoup(src_detail, "html.parser")
+        # src_detail = driver.page_source
+        # soup = BeautifulSoup(src_detail, "html.parser")
 
         last_height = driver.execute_script("return document.body.scrollHeight")
-        for i in range(3):
+        for i in range(1):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(SCROLL_PAUSE_TIME)
+            # time.sleep(SCROLL_PAUSE_TIME)
             new_height = driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
                 break
             last_height = new_height
+        src_detail = driver.page_source
+        soup = BeautifulSoup(src_detail, "html.parser")
 
         try:
             img_link = soup.select_one("picture > img").get("src")
