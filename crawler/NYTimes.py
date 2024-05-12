@@ -91,9 +91,11 @@ def processing(driver, articles, url):
 
             content = ""
             for paragraph in paragraphs:
-                content += paragraph.get_text().strip() + "\n"
+                content += paragraph.get_text().strip() + "\n\n"
         except:
             driver.implicitly_wait(2) 
+        if len(content) < 215:
+            continue
         
         article = {
                     "title": title, 
