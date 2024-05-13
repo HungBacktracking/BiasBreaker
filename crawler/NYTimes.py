@@ -8,6 +8,18 @@ from random import randint
 from datetime import datetime, timedelta
 import time
 
+def standardize_category(category):
+    category = category.lower()
+    categories = {
+        "us": "world", "world": "world", "nyregion": "world",
+        "business": "business", "politics": "politics",
+        "technology": "technology", "sports": "sports",
+        "arts": "entertainment", "movies": "entertainment",
+        "theater": "entertainment", "travel": "travel"
+    }
+    return categories.get(category, "")
+
+
 def crawl(driver, articles, start_date, end_date):
     time_begin = time.time()
     prev_len = len(articles)
@@ -66,12 +78,20 @@ def processing(driver, articles, url, datetime):
     for tile in tiles:
         title = tile.get_text().strip()
         info_link = tile.get("href")
-        if info_link.split("/")[2] != "www.nytimes.com":
+        if info_link.split("/")[2] != "www.nytimes.com" or len(info_link.split("/")) < 8:
             continue
         
         category = info_link.split("/")[6]
+        if info_link.split("/")[6] == "us" and info_link.split("/")[7] == "politics":
+            category = "politics"
         if category[0].isdigit():
             category = info_link.split("/")[7]
+            if info_link.split("/")[7] == "us" and info_link.split("/")[8] == "politics":
+                category = "politics"
+
+        category = standardize_category(category)
+        if category == "":
+            continue
     
         driver.get(info_link)
         last_height = driver.execute_script("return document.body.scrollHeight")
