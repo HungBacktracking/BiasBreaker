@@ -154,3 +154,4 @@ def CRAWL():
 
 data = CRAWL()
 print(len(data))
+print(data)

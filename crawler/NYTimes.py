@@ -8,8 +8,6 @@ from random import randint
 from datetime import datetime, timedelta
 import time
 
-from config import *
-
 def crawl(driver, articles, start_date, end_date):
     time_begin = time.time()
     prev_len = len(articles)
@@ -24,14 +22,14 @@ def crawl(driver, articles, start_date, end_date):
     # Loop through each date from start to end
     while current <= end:
         url = f"https://www.nytimes.com/sitemap/{current.year}/{current.month:02}/{current.day:02}/"
-        processing(driver, articles, url)
+        processing(driver, articles, url, current.strftime("%d-%m-%Y"))
 
         current += timedelta(days = 1)
 
     time_end = time.time()
     print("{} {}. {}".format("NYTimes", len(articles) - prev_len, type, time_end - time_begin))
 
-def processing(driver, articles, url):
+def processing(driver, articles, url, datetime):
     # Get the web page
     driver.get(url)
 
@@ -41,19 +39,19 @@ def processing(driver, articles, url):
     tiles = soup.select(".css-ach7ou > .css-cmbicj > li > a")
 
     # Login to NYTimes
-    time.sleep(3)
-    driver.find_element(By.CSS_SELECTOR, ".css-ni9it0").click()
-    time.sleep(3.5)
-    driver.find_element(By.ID, "email").send_keys(f"{email}")
-    time.sleep(2.3)
-    driver.find_element(By.CSS_SELECTOR, ".css-1i3jzoq-buttonBox-buttonBox-primaryButton-primaryButton-Button").click()
-    time.sleep(2.3)
-    driver.find_element(By.ID, "password").send_keys(f"{password}")
-    time.sleep(2.3)
-    driver.find_element(By.CSS_SELECTOR, ".css-1i3jzoq-buttonBox-buttonBox-primaryButton-primaryButton-Button").click()
+    # time.sleep(3)
+    # driver.find_element(By.CSS_SELECTOR, ".css-ni9it0").click()
+    # time.sleep(3.5)
+    # driver.find_element(By.ID, "email").send_keys(f"{email}")
+    # time.sleep(2.3)
+    # driver.find_element(By.CSS_SELECTOR, ".css-1i3jzoq-buttonBox-buttonBox-primaryButton-primaryButton-Button").click()
+    # time.sleep(2.3)
+    # driver.find_element(By.ID, "password").send_keys(f"{password}")
+    # time.sleep(2.3)
+    # driver.find_element(By.CSS_SELECTOR, ".css-1i3jzoq-buttonBox-buttonBox-primaryButton-primaryButton-Button").click()
 
 
-    time.sleep(4.1)
+    time.sleep(2.1)
     SCROLL_PAUSE_TIME = 1.5
     last_height = driver.execute_script("return document.body.scrollHeight")
     for i in range(3):
@@ -68,12 +66,14 @@ def processing(driver, articles, url):
     for tile in tiles:
         title = tile.get_text().strip()
         info_link = tile.get("href")
-    
+        if info_link.split("/")[2] != "www.nytimes.com":
+            continue
         
+        category = info_link.split("/")[6]
+        if category[0].isdigit():
+            category = info_link.split("/")[7]
+    
         driver.get(info_link)
-        # src_detail = driver.page_source
-        # soup = BeautifulSoup(src_detail, "html.parser")
-
         last_height = driver.execute_script("return document.body.scrollHeight")
         for i in range(1):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -87,6 +87,7 @@ def processing(driver, articles, url):
 
         try:
             img_link = soup.select_one("picture > img").get("src")
+            image_caption = soup.select_one(".css-jevhma").get_text().strip()
             paragraphs = soup.select(".StoryBodyCompanionColumn .css-at9mc1")
 
             content = ""
@@ -98,15 +99,19 @@ def processing(driver, articles, url):
             continue
         
         article = {
+                    "publisher": "New York Times",
                     "title": title, 
                     "info_link": info_link, 
-                    "img_link": img_link, 
-                    "content": content
+                    "image": {
+                        "url_link": img_link,
+                        "description": image_caption
+                    },
+                    "category": category,
+                    "content": content,
+                    "datetime": datetime,
         }
 
         print()
         print(article)
 
-
-        article_tmp = tuple(article.values())
-        articles.add(article_tmp)
+        articles.append(article)
