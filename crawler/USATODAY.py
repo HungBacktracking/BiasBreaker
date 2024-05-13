@@ -138,7 +138,6 @@ def crawl(datas_, start_date, end_date):
         url = f"https://www.usatoday.com/sitemap/{current.year}/{numeric_to_month(current.month)}/{current.day:01}/"
         datas = processing(url)
         for data in datas:
-            print(data)
             data["datetime"] = f"{current.day:02}-{current.month:02}-{current.year}"
             datas_.append(data)
         current += timedelta(days=1)
