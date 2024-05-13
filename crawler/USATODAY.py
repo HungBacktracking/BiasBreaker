@@ -105,7 +105,7 @@ def processing(url):
                         continue
 
                     data_dict = {
-                        "publisher": "USATODAY",
+                        "publisher": "USA Today",
                         "title": title,
                         "info_link": link_to_a_paper,
                         "content": text,
@@ -128,8 +128,7 @@ from datetime import datetime, timedelta
 import time
 
 
-def crawl(start_date, end_date):
-    datas_ = []
+def crawl(datas_, start_date, end_date):
     start = datetime.strptime(start_date, "%d-%m-%Y")
     end = datetime.strptime(end_date, "%d-%m-%Y")
     # Initialize the current date to the start date
@@ -139,7 +138,7 @@ def crawl(start_date, end_date):
         url = f"https://www.usatoday.com/sitemap/{current.year}/{numeric_to_month(current.month)}/{current.day:01}/"
         datas = processing(url)
         for data in datas:
+            print(data)
             data["datetime"] = f"{current.day:02}-{current.month:02}-{current.year}"
             datas_.append(data)
         current += timedelta(days=1)
-    return datas_

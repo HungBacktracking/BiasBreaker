@@ -7,6 +7,7 @@ import threading
 import schedule
 import time
 import NYTimes
+import USATODAY
 import database
 from constant import *
 
@@ -14,6 +15,8 @@ from constant import *
 def crawlNYTimes():
     NYTimes.crawl(driver[0], dataset, start_date, end_date)
 
+def crawUSAToday():
+    USATODAY.crawl(dataset, start_date, end_date)
 
 def pushDataToDatabase(dataset):
     database.insert_articles(dataset)
@@ -50,12 +53,13 @@ def UPDATE():
 # Create threads
 t = ['' for _ in range(NUMBER_OF_THREADS)]
 t[0] = threading.Thread(target = crawlNYTimes)
+t[1] = threading.Thread(target = crawUSAToday)
 
 
 dataset = []
 driver = []
 for i in range(NUMBER_OF_THREADS):
-    driver.append(webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options))
+    driver.append(webdriver.Chrome(service=Service(ChromeDriverManager().install())))
 
 #-----------------------------SCHEDULING-------------------------------------
 schedule.every(1).day.do(UPDATE)

@@ -1,7 +1,7 @@
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 
-NUMBER_OF_THREADS = 1
+NUMBER_OF_THREADS = 2
 start_date = "10-05-2024"
 end_date = "11-05-2024"
 
