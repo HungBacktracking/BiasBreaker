@@ -63,8 +63,7 @@ driver = []
 for i in range(NUMBER_OF_THREADS):
     driver.append(webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options))
 
-dataset = set([])
-
+dataset = []
 
 #-----------------------------SCHEDULING-------------------------------------
 schedule.every(1).day.do(UPDATE)
