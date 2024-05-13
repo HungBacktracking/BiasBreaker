@@ -130,8 +130,4 @@ def processing(driver, articles, url, datetime):
                     "content": content,
                     "datetime": datetime,
         }
-
-        print()
-        print(article)
-
         articles.append(article)
