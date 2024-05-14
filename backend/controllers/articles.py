@@ -9,3 +9,13 @@ def get_article(article_id):
         return jsonify(article)
     else:
         return jsonify({"error": "Article not found"}), 404
+
+
+def get_all_article():
+    articles = Article.find_all()
+    return jsonify({"articles": articles})
+
+
+def get_all_article_by_category(category):
+    articles = Article.find_all_by_category(category)
+    return jsonify({"articles": articles})
