@@ -1,8 +1,10 @@
 from flask import Flask, jsonify
-from routes.articles import article_blueprint
+from routes.articles_route import article
+from routes.users_route import user
 
 app = Flask(__name__)
-app.register_blueprint(article_blueprint)
+app.register_blueprint(article)
+app.register_blueprint(user)
 
 
 @app.route("/")

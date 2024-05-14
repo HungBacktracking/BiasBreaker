@@ -1,6 +1,8 @@
 from database import db
 
-users = db['users']
+users = db["users"]
+
+
 class User:
     def __init__(self, email, password):
         self.email = email
@@ -8,7 +10,7 @@ class User:
 
     @staticmethod
     def find_one(email):
-        return users.find_one({'email': email})
+        return users.find_one({"email": email})
 
     @staticmethod
     def create(email, password):
@@ -18,21 +20,18 @@ class User:
 
     @staticmethod
     def delete(email):
-        users.delete_one({'email': email})
+        users.delete_one({"email": email})
 
     @staticmethod
     def update(email, password):
-        users.update_one({'email': email}, {'$set': {'password': password}})
+        users.update_one({"email": email}, {"$set": {"password": password}})
 
     @staticmethod
     def validate(email, password):
         user = User.find_one(email)
         if user is None:
             return False
-        return user['password'] == password
+        return user["password"] == password
 
     def __dict__(self):
-        return {
-            'email': self.email,
-            'password': self.password
-        }
+        return {"email": self.email, "password": self.password}
