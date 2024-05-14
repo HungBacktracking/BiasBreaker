@@ -31,3 +31,6 @@ class Article:
             article["_id"] = str(article["_id"])
             serialized_articles.append(article)
         return serialized_articles
+
+    @staticmethod
+    def find_all_paper
