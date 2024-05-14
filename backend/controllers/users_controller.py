@@ -1,5 +1,5 @@
 from flask import jsonify
-from models.users import User
+from models.users_model import User
 
 
 def get_user(email):
