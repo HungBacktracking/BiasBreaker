@@ -5,8 +5,8 @@ user = Blueprint("user", __name__)
 
 
 @user.route("/users/<user_id>", methods=["GET"])
-def get_user_route(article_id):
-    return get_user(article_id)
+def get_user_route(user_id):
+    return get_user(user_id)
 
 @user.route("/users/delete/<user_id>", methods=["DELETE"])
 def delete_user_route(user_id):
