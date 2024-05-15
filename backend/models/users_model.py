@@ -1,4 +1,4 @@
-from database import db
+from database.database import db
 from bson import ObjectId
 
 users = db["users"]
