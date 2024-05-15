@@ -3,3 +3,17 @@ bs4==0.0.2
 selenium==4.20.0
 webdriver-manager==4.0.1
 Werkzeug==2.2.3
+google-generativeai
+nltk
+pandas
+numpy
+seaborn
+torch
+torchvision
+setuptools
+ipython
+langchain-google-genai
+langchain
+langchain_community
+rich
+tiktoken
