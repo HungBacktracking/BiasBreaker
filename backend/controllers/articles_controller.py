@@ -1,5 +1,5 @@
 from flask import jsonify
-from models.article_model import Article
+from ..models.article_model import Article
 
 
 def get_article(article_id):
