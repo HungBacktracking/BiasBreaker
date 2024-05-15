@@ -1,7 +1,7 @@
 from flask import jsonify
 from pymongo.collection import Collection
 from pymongo.mongo_client import MongoClient
-import config
+from .. import config
 import random
 from bson.objectid import ObjectId
 from bson.json_util import dumps, loads

@@ -1,8 +1,7 @@
 # auth_controller.py
 from flask import jsonify
 from flask_jwt_extended import create_access_token
-from users_controller import create_user
-from models.users_model import User
+from ..models.users_model import User
 
 
 def signup_controller(request):
