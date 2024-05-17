@@ -10,7 +10,7 @@ import NYTimes
 import USATODAY
 import database
 from constant import *
-
+from model.model import TextSummarizer, Predictor
 
 def crawlNYTimes():
     NYTimes.crawl(driver[0], dataset, start_date, end_date)
