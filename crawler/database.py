@@ -18,5 +18,3 @@ def insert_articles(articles):
     # Choose collection
     collection = db['articles']
     collection.insert_many(articles)
-
-
