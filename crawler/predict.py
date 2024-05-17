@@ -18,6 +18,8 @@ def prediction(target_index, date="10-05-2024"):
     return prediction_
 
 
+print("Hello")
+
 for i in range(16):
     print(i)
     print(articles[i]["title"])
