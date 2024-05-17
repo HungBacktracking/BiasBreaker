@@ -2,6 +2,7 @@ from model.model import Predictor
 from database import db
 from rich.markdown import Markdown
 from rich.console import Console
+import time
 
 console = Console()
 Articles = db["articles"]
@@ -17,11 +18,8 @@ def prediction(target_index, date="10-05-2024"):
     return prediction_
 
 
-print(articles[0]["content"])
-print(articles[1]["info_link"])
-
-
 for i in range(16):
     print(i)
     print(articles[i]["title"])
     print(prediction(i, "10-05-2024"))
+    time.sleep(10)
