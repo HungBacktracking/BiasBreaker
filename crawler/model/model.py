@@ -1,16 +1,18 @@
 from utils import *
 import world 
 import os
+import sys
 import requests
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import StuffDocumentsChain
 from langchain.chains.llm import LLMChain
-from langchain.chains.qa_with_sources import load_qa_with_sources_chain
 from langchain.text_splitter import TokenTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.schema.document import Document
+from langchain.globals import set_debug
+set_debug(True)
 
 # from rich.markdown import Markdown
 # from rich.console import Console
@@ -114,6 +116,7 @@ class Predictor(object):
             Args:
                 model_name (str, optional): The name of the model to use for prediction. 
                                             Default is 'gemini-pro'.
+                company_url (str, optional): The URL of the company information.
     
             Raises:
                 AssertionError: If the model_name is not one of the available models.
@@ -130,15 +133,15 @@ class Predictor(object):
                 template=self.template,
                 input_variables=["company_info", "news_article"],
             )
-            
+            # Define the Prediction Chain
             chain = LLMChain(
                 llm=self.llm,
                 prompt=prompt_template
             )
-            
+            # Load the news article
             loader = StringLoader(news_article)
             docs = loader.load()
-            
+            # Invoke Chain
             prediction = chain.run(
                 company_info=self.company_info,
                 news_article=docs,
