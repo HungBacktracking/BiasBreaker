@@ -33,4 +33,4 @@ def summary_by_date(date="10-05-2024"):
         # print(data)
 
 
-summary_by_date("10-05-2024")
+# summary_by_date("10-05-2024") #adding summary of article to database

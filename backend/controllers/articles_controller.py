@@ -74,3 +74,13 @@ def update_article_by_id(article_id, update_article):
         return jsonify({"message": "Update"})
     else:
         return jsonify({"error": "Cannot update"}), 404
+
+
+def get_summary_article_by_id(id):
+    summary_text = Article.find_summary(id)
+    return jsonify({"summary-content": summary_text})
+
+
+def get_relevant_article(id):
+    relative_article = Article.find_related_article(id)
+    return jsonify({"related articles": relative_article})
