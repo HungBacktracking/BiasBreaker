@@ -16,9 +16,9 @@ from langchain.schema.document import Document
 
 from rake_nltk import Rake
 
-from rich.markdown import Markdown
-from rich.console import Console
-console = Console()
+# from rich.markdown import Markdown
+# from rich.console import Console
+# console = Console()
 
 import warnings
 from langchain_core._api.deprecation import LangChainDeprecationWarning
@@ -57,9 +57,9 @@ class TextSummarizer(object):
         self.llm = ChatGoogleGenerativeAI(model=model_name)
         # Define templates for summarization
         self.templates = {
-            'easy': "Write a concise summary of the following: {text} CONCISE SUMMARY:",
-            'normal': "Write a summary of the following: {text} SUMMARY:",
-            'detailed': "Write a detailed summary of the following: {text} DETAILED SUMMARY:"
+            'easy': "Viết một bản tóm tắt ngắn gọn về nội dung sau đây: {text} TÓM TẮT NGẮN GỌN:",
+            'normal': "Viết một bản tóm tắt về nội dung sau đây: {text} TÓM TẮT:",
+            'detailed': "Viết một bản tóm tắt chi tiết về nội dung sau đây: {text} TÓM TẮT CHI TIẾT:"
         }
         
     def get_result(self, text_file):
@@ -127,7 +127,7 @@ class Predictor(object):
             # Initialize model
             self.llm = ChatGoogleGenerativeAI(model=model_name)
             # Define template for prediction
-            self.template = "Given the company information: {company_info} and the news article: {news_article}, predict the possible impacts if they are related to one or some of the following sectors of the company: Deliveries, Mobility, or Financial Services. PREDICTION:"
+            self.template = "Với thông tin về công ty: {company_info} và bài báo: {news_article}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
             self.company_info = WebBaseLoader(company_url).load()
         
         def predict(self, news_article):
@@ -151,9 +151,9 @@ class Predictor(object):
             
             return prediction
         
-predictor = Predictor()
-news_article = 'The COVID-19 pandemic has had a profound impact on the global economy, with many businesses forced to close their doors and millions of people losing their jobs. In response to the crisis, governments around the world have implemented various measures to support businesses and workers, including stimulus packages, tax breaks, and unemployment benefits. However, the economic fallout from the pandemic is far from over, and many experts warn that the worst is yet to come. In this article, we will explore the economic impact of the COVID-19 pandemic and discuss what the future may hold for the global economy.'
-console.print(Markdown('### PREDICTION\n' + predictor.predict(news_article)))
+# predictor = Predictor()
+# news_article = 'The COVID-19 pandemic has had a profound impact on the global economy, with many businesses forced to close their doors and millions of people losing their jobs. In response to the crisis, governments around the world have implemented various measures to support businesses and workers, including stimulus packages, tax breaks, and unemployment benefits. However, the economic fallout from the pandemic is far from over, and many experts warn that the worst is yet to come. In this article, we will explore the economic impact of the COVID-19 pandemic and discuss what the future may hold for the global economy.'
+# console.print(Markdown('### PREDICTION\n' + predictor.predict(news_article)))
 
 def keyword_extractor(text, count=5):
     """Extracts keywords from the given text.
@@ -168,3 +168,7 @@ def keyword_extractor(text, count=5):
     r = Rake()
     r.extract_keywords_from_text(text)
     return r.get_ranked_phrases()[:count]
+
+print(keyword_extractor('''spaCy is an open-source software library for advanced natural language processing,
+written in the programming languages Python and Cython. The library is published under the MIT license
+and its main developers are Matthew Honnibal and Ines Montani, the founders of the software company Explosion.'''))
