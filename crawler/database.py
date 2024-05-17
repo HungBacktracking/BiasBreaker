@@ -6,7 +6,7 @@ import random
 from bson.objectid import ObjectId
 from bson.json_util import dumps, loads
 
-uri = f"mongodb+srv://{config.USER}:{config.PASSWORD}@cluster0.izgloib.mongodb.net"
+uri = f"mongodb+srv://{config.USER}:{config.PASSWORD}@cluster0.izgloib.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 client = MongoClient(uri)
 
