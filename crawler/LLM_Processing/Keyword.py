@@ -1,5 +1,5 @@
 from model.model import KeywordExtractor
-
+import time
 
 def insert_keywords(dataset):
     for article in dataset:
@@ -7,3 +7,4 @@ def insert_keywords(dataset):
         kw_extractor = KeywordExtractor()
         keywords = kw_extractor.extract_keywords(text)
         article['keywords'] = keywords
+        time.sleep(15)
