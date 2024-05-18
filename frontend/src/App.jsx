@@ -1,14 +1,14 @@
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import MainNews from './components/MainNews/MainNews';
 import Navbar from './components/Navbar/Navbar';
 
 function App() {
   return (
-    <>
+    <div className='flex flex-col'>
       <Header />
-      <Navbar />
-      <Footer />
-    </>
+      <div style={{ height: '125px' }}></div>
+      <MainNews />
+    </div>
   );
 }
 

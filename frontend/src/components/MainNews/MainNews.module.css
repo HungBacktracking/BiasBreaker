@@ -1,0 +1,37 @@
+.full_height {
+    height: 100%;
+}
+
+.main_container {
+    margin-left: 50px;
+    margin-right: 50px;
+    padding-bottom: 22px;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.news {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.news_list {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.top_news {
+    flex-basis: 65%;
+    background-color: white;
+    border-radius: 18px;
+    height: 100rem;
+}
+
+.for_you {
+    flex-basis: 35%;
+    background-color: white;
+    border-radius: 18px;
+}
