@@ -15,13 +15,13 @@ category_id = {
 
 def get_category_from_id(url):
     category_id = {
-        "world": "1001002",
-        "business": "1003159",
-        "polictics": "1001005",
-        "sport": "1002565",
-        "technology": "1002592",
-        "entertainment": "1002691",
-        "travel": "1003231",
+        "thế giới": "1001002",
+        "kinh doanh": "1003159",
+        "chính trị": "1001005",
+        "thể thao": "1002565",
+        "công nghệ": "1002592",
+        "giải trí": "1002691",
+        "du lịch": "1003231",
     }
     for category, id in category_id.items():
         if id in url:
