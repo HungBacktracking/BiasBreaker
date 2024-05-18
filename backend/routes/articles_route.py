@@ -13,8 +13,6 @@ from ..controllers.articles_controller import (
     add_article,
     delete_article,
     update_article_by_id,
-    get_summary_article_by_id,
-    get_relevant_article,
 )
 
 article = Blueprint("article", __name__)
@@ -91,13 +89,3 @@ def delete_article_route(id):
 def update_article_route(id):
     article_update = request.get_json()
     return update_article_by_id(id, article_update)
-
-
-@article.route("/articles/<id>/summary", methods=["GET"])
-def get_summary_article_by_id_route(id):
-    return get_summary_article_by_id(id)
-
-
-@article.route("/articles/<id>/relevant", methods=["GET"])
-def get_relevant_article_route(id):
-    return get_relevant_article(id)
