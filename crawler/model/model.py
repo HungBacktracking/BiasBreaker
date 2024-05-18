@@ -1,5 +1,5 @@
-from utils import *
-import world
+from .utils import *
+from . import world
 import os
 import requests
 import heapq
