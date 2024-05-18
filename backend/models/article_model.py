@@ -2,8 +2,6 @@ from ..database.database import db
 from bson import ObjectId
 
 articles = db["articles"]
-realatives = db["relatives"]
-summaries = db["summaries"]
 
 
 class Article:
@@ -116,21 +114,3 @@ class Article:
             return True
         else:
             return False
-
-    @staticmethod
-    def find_summary(id):
-        summary_text = summaries.find_one({"article_id": ObjectId(id)})
-        summary_text["_id"] = str(summary_text["_id"])
-        summary_text["article_id"] = str(summary_text["article_id"])
-        return summary_text
-
-    @staticmethod
-    def find_related_article(id):
-        relative_artices_id_list = realatives.find_one({"article_id": ObjectId(id)})
-        print(relative_artices_id_list["relation"])
-        relatives_articles = []
-        for id in relative_artices_id_list["relation"]:
-            article = articles.find_one({"_id": ObjectId(id)})
-            article["_id"] = str(article["_id"])
-            relatives_articles.append(article)
-        return relatives_articles
