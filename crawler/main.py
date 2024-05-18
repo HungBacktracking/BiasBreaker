@@ -11,6 +11,7 @@ from handle_publisher import NYTimes, USATODAY, VNEXPRESS, TuoiTre
 import database
 from constant import *
 from model.model import TextSummarizer, Predictor, KeywordExtractor
+from LLM_Processing import Keyword, Summary, Predict
 
 def crawlNYTimes():
     NYTimes.crawl(driver[0], dataset, start_date, end_date)
@@ -23,6 +24,15 @@ def crawlVNExpress():
 
 def crawlTuoiTre():
     TuoiTre.crawl(driver[0], dataset, start_date, end_date)
+
+def insert_keywords(dataset):
+    Keyword.insert_keywords(dataset)
+
+def insert_summaries(dataset):
+    Summary.insert_summaries(dataset)
+
+def insert_predict(dataset):
+    Predict.insert_predict(dataset)
 
 def pushDataToDatabase(dataset):
     database.insert_articles(dataset)
@@ -63,8 +73,10 @@ def pushKeywordsToDatabase():
 def UPDATE():
     start = time.time()
     CRAWL()
+    insert_keywords(dataset)
+    insert_summaries(dataset)
+    insert_predict(dataset)
     pushDataToDatabase(dataset)
-    # pushKeywordsToDatabase()
     end = time.time()   
     print("TOTAL TIME: ", end - start)
 
