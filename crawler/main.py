@@ -6,11 +6,12 @@ from bs4 import BeautifulSoup
 import threading
 import schedule
 import time
+import datetime
 import NYTimes
 import USATODAY
 import database
 from constant import *
-from model.model import TextSummarizer, Predictor
+from model.model import TextSummarizer, Predictor, keyword_extractor
 
 def crawlNYTimes():
     NYTimes.crawl(driver[0], dataset, start_date, end_date)
@@ -34,6 +35,22 @@ def CRAWL():
     for i in range(NUMBER_OF_THREADS):
         driver[i].quit()
 
+def pushKeywordsToDatabase():
+    """_summary_
+    """
+    # Query articles from database with datetime = today
+    articles = database.get_articles_by_date(datetime.datetime.now().date().strftime('%d-%m-%Y'))
+    # Get the text from the articles
+    texts = [article['content'] for article in articles]
+    # Get the keywords from the text
+    keywords = keyword_extractor(texts)
+    # Match each keyword with the article
+    for i, article in enumerate(articles):
+        article['keywords'] = keywords[i]
+    data = [{'_id': article['_id'], 'keywords': article['keywords']} for article in articles]
+    # Push data to database
+    database.insert_keywords(data)
+    
     
 
 # Crawl and update all the database
@@ -41,6 +58,7 @@ def UPDATE():
     start = time.time()
     CRAWL()
     pushDataToDatabase(dataset)
+    pushKeywordsToDatabase()
     end = time.time()   
     print("TOTAL TIME: ", end - start)
 
