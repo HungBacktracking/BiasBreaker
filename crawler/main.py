@@ -7,10 +7,7 @@ import threading
 import schedule
 import time
 import datetime
-import NYTimes
-import USATODAY
-import VNEXPRESS
-import TuoiTre
+from handle_publisher import NYTimes, USATODAY, VNEXPRESS, TuoiTre
 import database
 from constant import *
 from model.model import TextSummarizer, Predictor, KeywordExtractor
