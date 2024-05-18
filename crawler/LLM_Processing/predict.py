@@ -1,26 +1,9 @@
-# from model.model import Predictor
-# from database import db
-# from rich.markdown import Markdown
-# from rich.console import Console
-# import time
+from model.model import Predictor
 
-# console = Console()
-# Articles = db["articles"]
+def insert_predict(dataset):
+    for article in dataset:
+        text = article['content']
+        predictor = Predictor()
+        prediction = predictor.predict_from_article(text)
+        article['prediction'] = prediction
 
-# articles = list(Articles.find())
-
-# predictor = Predictor()
-
-
-# def prediction(target_index, date="10-05-2024"):
-#     date_articles_list = list(Articles.find({"datetime": date}))
-#     prediction_ = predictor.predict(date_articles_list[target_index]["content"])
-#     return prediction_
-
-
-# print("Hello")
-
-# for i in range(16):
-#     print(i)
-#     print(articles[i]["title"])
-#     print(prediction(i, "10-05-2024"))
