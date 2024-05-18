@@ -2,7 +2,7 @@ import classes from './MainNews.module.css';
 import { motion } from "framer-motion";
 import { fadeIn } from "./variant";
 
-import Title from '../Title/Title';
+import Title from './Title/Title';
 
 function MainNews() {
   return (

@@ -1,6 +1,6 @@
 import classes from './Header.module.css';
 import './Header.module.css';
-import Navbar from '../Navbar/Navbar';
+import Navbar from './Navbar/Navbar';
 import InputSearch from './InputSearch';
 import React, { useState } from 'react';
 
