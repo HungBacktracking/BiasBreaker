@@ -11,7 +11,7 @@ import NYTimes
 import USATODAY
 import database
 from constant import *
-from model.model import TextSummarizer, Predictor, keyword_extractor
+from model.model import TextSummarizer, Predictor, KeywordExtractor
 
 def crawlNYTimes():
     NYTimes.crawl(driver[0], dataset, start_date, end_date)
@@ -43,7 +43,8 @@ def pushKeywordsToDatabase():
     # Get the text from the articles
     texts = [article['content'] for article in articles]
     # Get the keywords from the text
-    keywords = keyword_extractor(texts)
+    kw_extractor = KeywordExtractor()
+    keywords = kw_extractor.extract_keywords(texts)
     # Match each keyword with the article
     for i, article in enumerate(articles):
         article['keywords'] = keywords[i]

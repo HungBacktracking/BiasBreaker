@@ -1,0 +1,7 @@
+apache-flink-ml==2.3.0
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+pymongo
