@@ -9,6 +9,7 @@ import time
 import datetime
 import NYTimes
 import USATODAY
+import VNEXPRESS
 import database
 from constant import *
 from model.model import TextSummarizer, Predictor, keyword_extractor
@@ -18,6 +19,9 @@ def crawlNYTimes():
 
 def crawUSAToday():
     USATODAY.crawl(dataset, start_date, end_date)
+
+def crawlVNExpress():
+    VNEXPRESS.crawl(dataset, start_date, end_date)
 
 def pushDataToDatabase(dataset):
     database.insert_articles(dataset)
@@ -72,6 +76,7 @@ def UPDATE():
 t = ['' for _ in range(NUMBER_OF_THREADS)]
 t[0] = threading.Thread(target = crawlNYTimes)
 t[1] = threading.Thread(target = crawUSAToday)
+t[2] = threading.Thread(target = crawlVNExpress)
 
 
 dataset = []

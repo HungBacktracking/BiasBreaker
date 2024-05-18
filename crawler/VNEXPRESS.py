@@ -135,10 +135,7 @@ def processing(
     return article_data
 
 
-def crawl(start_date, end_date):  # crawl from start date to end date
-
-    datas = []
-
+def crawl(datas, start_date, end_date):  # crawl from start date to end date
     start = datetime.strptime(start_date, "%d-%m-%Y")
     end = datetime.strptime(end_date, "%d-%m-%Y")
     current = start
@@ -163,4 +160,3 @@ def crawl(start_date, end_date):  # crawl from start date to end date
                     datas.append(article)
 
         current += timedelta(days=1)
-    return datas
