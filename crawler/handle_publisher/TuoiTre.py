@@ -8,6 +8,7 @@ from random import randint
 from datetime import datetime, timedelta
 import time
 
+category_list = ["thế giới", "thể thao", "kinh doanh", "giải trí", "du lịch", "công nghệ", "chính trị"]
 
 def crawl(driver, articles, start_date, end_date): # Tuoi Tre dont have a way to get articles by date 
     time_begin = time.time()
@@ -68,7 +69,7 @@ def processing(driver, articles, url, start_date):
                 content += paragraph.get_text().strip() + "\n\n"
         except:
             driver.implicitly_wait(2) 
-        if len(content) < 215:
+        if len(content) < 215 or category.lower() not in category_list:
             continue
         current = datetime.strptime(date, "%d-%m-%Y")
         if current < start_date:
