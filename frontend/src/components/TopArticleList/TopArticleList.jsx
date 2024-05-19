@@ -11,9 +11,9 @@ const sampleData = [
       category: "Politics", 
       content: "Content of article 1",
       relatedArticles: [
-        { id: 4, title: "Related Article 1 for Article 1", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 1 for article 1" },
-        { id: 5, title: "Related Article 2 for Article 1", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 2 for article 1" },
-        { id: 6, title: "Related Article 3 for Article 1", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 3 for article 1" }
+        { id: 4, title: "Quốc hội tiến hành bầu Chủ tịch nước, Chủ tịch Quốc hội tại Kỳ họp thứ 7", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 1 for article 1" },
+        { id: 5, title: "Quốc hội tiến hành bầu Chủ tịch nước, Chủ tịch Quốc hội tại Kỳ họp thứ 7", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 2 for article 1" },
+        { id: 6, title: "Quốc hội tiến hành bầu Chủ tịch nước, Chủ tịch Quốc hội tại Kỳ họp thứ 7", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 3 for article 1" }
       ]
     },
     { 
@@ -24,9 +24,9 @@ const sampleData = [
       category: "Politics", 
       content: "Content of article 2",
       relatedArticles: [
-        { id: 7, title: "Related Article 1 for Article 2", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 1 for article 2" },
-        { id: 8, title: "Related Article 2 for Article 2", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 2 for article 2" },
-        { id: 9, title: "Related Article 3 for Article 2", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 3 for article 2" }
+        { id: 7, title: "Quốc hội tiến hành bầu Chủ tịch nước, Chủ tịch Quốc hội tại Kỳ họp thứ 7", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 1 for article 2" },
+        { id: 8, title: "Quốc hội tiến hành bầu Chủ tịch nước, Chủ tịch Quốc hội tại Kỳ họp thứ 7", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 2 for article 2" },
+        { id: 9, title: "Quốc hội tiến hành bầu Chủ tịch nước, Chủ tịch Quốc hội tại Kỳ họp thứ 7", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 3 for article 2" }
       ]
     },
     { 
@@ -37,9 +37,9 @@ const sampleData = [
       category: "Sports", 
       content: "Content of article 3",
       relatedArticles: [
-        { id: 10, title: "Related Article 1 for Article 3", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 1 for article 3" },
-        { id: 11, title: "Related Article 2 for Article 3", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 2 for article 3" },
-        { id: 12, title: "Related Article 3 for Article 3", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 3 for article 3" }
+        { id: 10, title: "Sự rối ren tại công ty đứng sau ChatGPT", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 1 for article 3" },
+        { id: 11, title: "Sự rối ren tại công ty đứng sau ChatGPT", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 2 for article 3" },
+        { id: 12, title: "Sự rối ren tại công ty đứng sau ChatGPT", imagePath: "https://via.placeholder.com/150", time: "Hôm qua", content: "Content of related article 3 for article 3" }
       ]
     }
   ];
