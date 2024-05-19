@@ -72,6 +72,15 @@ def get_image(soup_of_a_paper):
     return None
 
 
+def get_key_words(soup_of_a_paper):
+    elem = soup_of_a_paper.find("meta", attrs={"name": "keywords"})
+    try:
+        keywords = elem["content"].split(",")
+        return keywords
+    except:
+        return None
+
+
 def get_info(url_to_paper):
     article = {}
     res = requests.get(url_to_paper)
@@ -79,12 +88,14 @@ def get_info(url_to_paper):
     title = get_title(soup_of_a_paper)
     content = get_content(soup_of_a_paper)
     image = get_image(soup_of_a_paper)
-    if title and content and image:
+    keywords = get_key_words(soup_of_a_paper)
+    if title and content and image and keywords:
         article["publisher"] = "VN Express"
         article["title"] = title
         article["info_link"] = url_to_paper
         article["content"] = content
         article["image"] = image
+        article["keywords"] = keywords
         return article
     return None
 
@@ -160,3 +171,15 @@ def crawl(datas, start_date, end_date):  # crawl from start date to end date
                     datas.append(article)
 
         current += timedelta(days=1)
+
+
+# uncomment for testing
+# dataset = []
+# crawl(dataset, "17-05-2024", "18-05-2024")
+# print(len(dataset))
+# print(dataset[0]["title"])
+# print(dataset[0]["content"])
+# print(dataset[0]["image"])
+# print(dataset[0]["datetime"])
+# print(dataset[0]["keywords"])
+# print(dataset[0]["publisher"])
