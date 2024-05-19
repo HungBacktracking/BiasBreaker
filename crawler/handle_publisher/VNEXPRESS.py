@@ -1,16 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta, timezone
-
-category_id = {
-    "world": "1001002",
-    "business": "1003159",
-    "polictics": "1001005",
-    "sport": "1002565",
-    "technology": "1002592",
-    "entertainment": "1002691",
-    "travel": "1003231",
-}
+from database import db
 
 
 def get_category_from_id(url):
@@ -54,6 +45,11 @@ def get_content(soup_of_a_paper):
             text = elem.text
             content += text
             content += "\n"
+            try:
+                span_text = elem.find("span").text
+                content = content.replace(span_text, "")
+            except:
+                continue
         except:
             return None
     return content
@@ -76,6 +72,8 @@ def get_key_words(soup_of_a_paper):
     elem = soup_of_a_paper.find("meta", attrs={"name": "keywords"})
     try:
         keywords = elem["content"].split(",")
+        for i in range(len(keywords)):
+            keywords[i] = keywords[i].strip()
         return keywords
     except:
         return None
@@ -152,7 +150,15 @@ def crawl(datas, start_date, end_date):  # crawl from start date to end date
     current = start
 
     # Loop through each date from start to end
-
+    category_id = {
+        "thế giới": "1001002",
+        "kinh doanh": "1003159",
+        "chính trị": "1001005",
+        "thể thao": "1002565",
+        "công nghệ": "1002592",
+        "giải trí": "1002691",
+        "du lịch": "1003231",
+    }
     while current <= end:
 
         UNIX_current = convert_to_00_UNIX(
@@ -165,8 +171,11 @@ def crawl(datas, start_date, end_date):  # crawl from start date to end date
             articles = processing(url)
             for article in articles:
                 if article:
-                    article["datetime"] = (
-                        f"{current.day:02}-{current.month:02}-{current.year}"
+                    date = f"{current.day:02}-{current.month:02}-{current.year}"
+                    date = datetime.strptime(date, "%d-%m-%Y")
+                    article["datetime"] = date
+                    article["publisher_logo"] = (
+                        "https://lh3.googleusercontent.com/coH48HKromjaVo7QiwPfRSDMLsAq3as7MW4dPt48iBT7jlEXP8sTtV_UW9RVLEUHdcgSKsZJ8Q=h24-rw?fbclid=IwAR25pmTRB153W93spm158TWzgX0OFeC1-dNUN0WT8ij7KKqgKp5sgmQi5JQ"
                     )
                     datas.append(article)
 
@@ -175,8 +184,9 @@ def crawl(datas, start_date, end_date):  # crawl from start date to end date
 
 # uncomment for testing
 # dataset = []
-# crawl(dataset, "17-05-2024", "18-05-2024")
+# crawl(dataset, "20-05-2024", "20-05-2024")
 # print(len(dataset))
+# print(dataset[0])
 # print(dataset[0]["title"])
 # print(dataset[0]["content"])
 # print(dataset[0]["image"])
