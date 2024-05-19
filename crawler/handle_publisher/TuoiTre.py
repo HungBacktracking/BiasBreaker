@@ -57,6 +57,7 @@ def processing(driver, articles, url, start_date):
         src_detail = driver.page_source
         soup = BeautifulSoup(src_detail, "html.parser")
 
+        content = ""
         try:
             img_link = soup.select_one("img.lightbox-content").get("src")
             image_caption = soup.select_one(".PhotoCMS_Caption p").get_text().strip()
@@ -64,7 +65,6 @@ def processing(driver, articles, url, start_date):
             date = soup.select_one("div.detail-time div").get_text().strip().split(" ")[0].replace("/", "-")
             category = soup.select_one(".detail-cate a").get_text().strip()
 
-            content = ""
             for paragraph in paragraphs:
                 content += paragraph.get_text().strip() + "\n\n"
         except:
