@@ -27,12 +27,28 @@
     flex-basis: 65%;
     background-color: white;
     border-radius: 18px;
-    height: 100rem;
     padding: 16px;
+    display: flex;
+    flex-direction: column; 
+    box-sizing: border-box;
+}
+
+.small_news {
+    flex-basis: 35%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 100%;
+    gap: 20px;
 }
 
 .for_you {
     flex-basis: 35%;
     background-color: white;
     border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    box-sizing: border-box;
+    height: 100%;
 }

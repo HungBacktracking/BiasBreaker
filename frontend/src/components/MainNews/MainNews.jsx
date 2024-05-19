@@ -5,7 +5,7 @@ import { fadeIn } from "./variant";
 import Title from './Title/Title';
 import Heading from './Heading/Heading';
 import TopArticleList from '../TopArticleList/TopArticleList'
-import ForYouArticleList from '../ForYouArticleList/ForYouArticleList'
+import SmallArticleList from '../SmallArticleList/SmallArticleList'
 
 function MainNews() {
   return (
@@ -19,9 +19,14 @@ function MainNews() {
 									<Heading title='Tin tức hàng đầu'/>
 									<TopArticleList />
 								</div>
-								<div className={classes.for_you}>
-									<ForYouArticleList />
-								</div>
+								<div className={classes.small_news}>
+									<div className={classes.for_you}>
+										<SmallArticleList isForYou={false}/>
+									</div>
+									<div className={classes.for_you}>
+										<SmallArticleList isForYou={true}/>
+									</div>
+								</div>	
 							</div>
 					</div>
 					<motion.div
