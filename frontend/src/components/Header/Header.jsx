@@ -1,9 +1,11 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import './Header.module.css';
 import Navbar from './Navbar/Navbar';
 import InputSearch from './InputSearch';
-import React, { useState } from 'react';
-
+import Button from '../Button/Button';
+import { IoIosArrowRoundForward } from 'react-icons/io';
 
 function Header() {
   return (
@@ -17,15 +19,23 @@ function Header() {
 
           <InputSearch />
 
-          <div className={`ms-auto flex`}>
-            <div className={classes.user_state}>
-                <p className={classes.user_role}>Admin</p>
-                <div className={classes.status}>
-                    <div className={`${classes.status_icon} ${classes.online}`}></div>
-                    <p className={classes.status_text}>online</p>
-                </div>
+          <div className={`ms-auto flex gap-3`}>
+            {/* <div className={classes.user_state}>
+              <p className={classes.user_role}>Admin</p>
+              <div className={classes.status}>
+                <div className={`${classes.status_icon} ${classes.online}`}></div>
+                <p className={classes.status_text}>online</p>
+              </div>
             </div>
-            <img className={`${classes.avatar} ${classes.circle}`} src="/image/avatar_full.jpg" alt="Avatar"/>
+            <img className={`${classes.avatar} ${classes.circle}`} src="/image/avatar_full.jpg" alt="Avatar" /> */}
+            <Link href="/about">
+              <Button variant="stroke">About us</Button>
+            </Link>
+            <Link href="/sign-up">
+              <Button>
+                Sign up now <IoIosArrowRoundForward className="text-lg font-semibold" />
+              </Button>
+            </Link>
           </div>
         </div>
         <Navbar />
