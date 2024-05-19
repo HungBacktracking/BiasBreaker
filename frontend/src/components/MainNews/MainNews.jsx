@@ -34,6 +34,16 @@ function MainNews() {
 						initial="hidden"
 						whileInView={"show"}
 						viewport={{ once: false, amount: 0.2 }}
+						className={classes.news}>
+						
+						<Title name="Dành cho bạn" date="Đề xuất dựa trên sở thích của riêng bạn"/>
+						<div className={classes.main_for_you}></div>
+					</motion.div>
+					<motion.div
+						variants={fadeIn("up", 0.3)}
+						initial="hidden"
+						whileInView={"show"}
+						viewport={{ once: false, amount: 0.2 }}
 						className={classes.category_news}>
 						
 
