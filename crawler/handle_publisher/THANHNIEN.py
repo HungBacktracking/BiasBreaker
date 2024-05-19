@@ -112,7 +112,7 @@ def crawl(driver, dataset, date1, date2):  # date1 > date2
     time.sleep(10.1)
     SCROLL_PAUSE_TIME = 3.5
     last_height = driver.execute_script("return document.body.scrollHeight")
-    for i in range(10):  # change this for deeper
+    for i in range(50):  # change this for deeper
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(SCROLL_PAUSE_TIME)
 

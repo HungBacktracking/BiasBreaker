@@ -1,11 +1,18 @@
 from model.model import Predictor
 import time
 
+predictor = Predictor()
+
 def insert_predict(dataset):
     for article in dataset:
         text = article['content']
-        predictor = Predictor()
-        prediction = predictor.predict_from_article(text)
+
+        prediction = ""
+        try:
+            prediction = predictor.predict_from_article(text)
+        except:
+            print("Error while predicting")
+
         article['prediction'] = prediction
         time.sleep(20)
 

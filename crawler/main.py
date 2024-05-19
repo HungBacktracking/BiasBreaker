@@ -58,6 +58,7 @@ def CRAWL():
 def UPDATE():
     start = time.time()
     CRAWL()
+    insert_keywords(dataset)
     insert_summaries(dataset)
     insert_predict(dataset)
     pushDataToDatabase(dataset)

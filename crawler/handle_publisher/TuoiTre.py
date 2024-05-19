@@ -49,7 +49,7 @@ def processing(driver, articles, url, start_date):
     time.sleep(2.1)
     SCROLL_PAUSE_TIME = 3.5
     last_height = driver.execute_script("return document.body.scrollHeight")
-    for i in range(20):
+    for i in range(50):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(SCROLL_PAUSE_TIME)
 
