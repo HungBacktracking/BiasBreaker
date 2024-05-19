@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { fadeIn } from "./variant";
 
 import Title from './Title/Title';
+import Heading from './Heading/Heading';
+import TopArticleList from '../TopArticleList/TopArticleList'
+import ForYouArticleList from '../ForYouArticleList/ForYouArticleList'
 
 function MainNews() {
   return (
@@ -10,13 +13,14 @@ function MainNews() {
       <div className={classes.full_height}>
 				<main className={classes.main_container}>
 					<div className={classes.news}>
-							<Title	name="Tin tức hôm nay" date="Thứ Bảy, 18 tháng 5"/>
+							<Title	name="Báo chí hôm nay" date="Thứ Bảy, 19 tháng 5"/>
 							<div className={classes.news_list}>
 								<div className={classes.top_news}>
-									
+									<Heading title='Tin tức hàng đầu'/>
+									<TopArticleList />
 								</div>
 								<div className={classes.for_you}>
-
+									<ForYouArticleList />
 								</div>
 							</div>
 					</div>

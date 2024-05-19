@@ -220,6 +220,7 @@ i.t_text_field__clearable {
 .avatar {
   display: inline-block;
   margin-left: 15px;
+  margin-right: 10px;
   width: 40px; 
   height: 40px;
   background-size: cover;

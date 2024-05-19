@@ -1,0 +1,50 @@
+.top_article_item {
+    border-top: 1px solid #e3e3e3;
+    margin-top: 16px;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: row;
+}
+
+.main_article {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.main_article_link {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.main_article_img {
+    width: 280px;
+    height: 168px;
+    border-radius: 12px;
+}
+
+.article_publisher {
+    margin-bottom: 6px;
+    margin-bottom: 6px;
+    font-size: 0;
+    min-height: 14px;
+}
+
+.article_publisher_img {
+    height: 12px;
+}
+
+.related_article_list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+    flex-grow: 1;
+    min-width: 0;
+}

@@ -1,13 +1,17 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
 import Header from './components/Header/Header';
-import MainNews from './components/MainNews/MainNews';
+
 
 function App() {
   return (
-    <div className='flex flex-col'>
+    <Router>
       <Header />
-      <div style={{ height: '125px' }}></div>
-      <MainNews />
-    </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
   );
 }
 
