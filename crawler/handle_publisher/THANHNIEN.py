@@ -28,6 +28,8 @@ def get_info(soup_of_a_paper):
         img["description"] = img_des
         meta_tag = soup_of_a_paper.find("meta", attrs={"name": "keywords"})
         keywords = meta_tag["content"].split(",")
+        for i in range(len(keywords)):
+            keywords[i] = keywords[i].strip()
         return text_, img, keywords
     except:
         return None
@@ -92,8 +94,11 @@ def crawl_article_by_date(start_date, end_date, links_elems, dataset):
                     data["keywords"] = keywords
                     data["title"] = title
                     data["info_link"] = info_link
-                    data["datetime"] = date
+                    data["datetime"] = date_time
                     data["category"] = category
+                    data["publisher_logo"] = (
+                        "https://lh3.googleusercontent.com/1lUP5eLpU5Mo0hLUEhgegmjBU4IO1p-xmAB-IqtrjsGZx1Hyd6GfItHHwIBwCbdz0Ir-DEatWg=s0-h24-rw?fbclid=IwAR1ZIeiSIq_70dBPUtU818zKqYqpMruu9okYrmIPFF5j7miCIsASHvFnfKU"
+                    )
                     data["publisher"] = "THANH NIEN"
                     dataset.append(data)
 
@@ -129,7 +134,7 @@ def crawl(driver, dataset, date1, date2):  # date1 > date2
 # uncomment for testing
 # driver = webdriver.Chrome()
 # dataset = []
-# crawl(driver, dataset, "19-05-2024", "18-05-2024")
+# crawl(driver, dataset, "20-05-2024", "20-05-2024")
 
 
 # print(len(dataset))
