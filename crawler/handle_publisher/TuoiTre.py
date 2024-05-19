@@ -41,7 +41,7 @@ def processing(driver, articles, url, start_date):
             s = randint(1, 2)
             time.sleep(s)
         except:
-            break
+            print("No more button")
     driver.implicitly_wait(2)
 
     # page_source is a variable created by Selenium - it holds all the HTML
