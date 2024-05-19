@@ -102,7 +102,7 @@ def crawl_article_by_date(start_date, end_date, links_elems, dataset):
             continue
 
 
-def crawl(drvier, dataset, date1, date2):  # date1 > date2
+def crawl(driver, dataset, date1, date2):  # date1 > date2
     driver.get("https://thanhnien.vn/tin-moi.htm")
     time.sleep(10.1)
     SCROLL_PAUSE_TIME = 3.5

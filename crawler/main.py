@@ -7,7 +7,7 @@ import threading
 import schedule
 import time
 import datetime
-from handle_publisher import NYTimes, USATODAY, VNEXPRESS, TuoiTre
+from handle_publisher import NYTimes, USATODAY, VNEXPRESS, TuoiTre, THANHNIEN
 import database
 from constant import *
 from model.model import TextSummarizer, Predictor, KeywordExtractor
@@ -24,6 +24,9 @@ def crawlVNExpress():
 
 def crawlTuoiTre():
     TuoiTre.crawl(driver[0], dataset, start_date, end_date)
+
+def crawlThanhNien():
+    THANHNIEN.crawl(driver[1], dataset, start_date, end_date)
 
 def insert_keywords(dataset):
     Keyword.insert_keywords(dataset)
@@ -49,31 +52,12 @@ def CRAWL():
     # Quit the drivers
     for i in range(NUMBER_OF_THREADS):
         driver[i].quit()
-
-def pushKeywordsToDatabase():
-    """_summary_
-    """
-    # Query articles from database with datetime = today
-    articles = database.get_articles_by_date(datetime.datetime.now().date().strftime('%d-%m-%Y'))
-    # Get the text from the articles
-    texts = [article['content'] for article in articles]
-    # Get the keywords from the text
-    kw_extractor = KeywordExtractor()
-    keywords = kw_extractor.extract_keywords(texts)
-    # Match each keyword with the article
-    for i, article in enumerate(articles):
-        article['keywords'] = keywords[i]
-    data = [{'_id': article['_id'], 'keywords': article['keywords']} for article in articles]
-    # Push data to database
-    database.insert_keywords(data)
-    
     
 
 # Crawl and update all the database
 def UPDATE():
     start = time.time()
     CRAWL()
-    insert_keywords(dataset)
     insert_summaries(dataset)
     insert_predict(dataset)
     pushDataToDatabase(dataset)
@@ -90,6 +74,7 @@ def UPDATE():
 t = ['' for _ in range(NUMBER_OF_THREADS)]
 t[0] = threading.Thread(target = crawlTuoiTre)
 t[1] = threading.Thread(target = crawlVNExpress)
+t[2] = threading.Thread(target = crawlThanhNien)
 
 
 dataset = []
