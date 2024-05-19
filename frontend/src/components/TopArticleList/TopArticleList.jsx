@@ -5,7 +5,7 @@ import TopArticleItem from './TopArticleItem';
 const sampleData = [
     { 
       id: 1, 
-      title: "Iphone sắp thoát lối mòn Mobile", 
+      title: "Quốc hội tiến hành bầu Chủ tịch nước, Chủ tịch Quốc hội tại Kỳ họp thứ 7 ", 
       imagePath: "https://image.nhandan.vn/w800/Uploaded/2024/athlraguvhlra/2024_05_18/dai-tuong-to-lam-9610-81.jpg.webp", 
       time: "Hôm nay", 
       category: "Politics", 
