@@ -14,7 +14,7 @@
     flex-shrink: 0;
 }
 
-.main_article_link {
+.article_link {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -27,7 +27,22 @@
     width: 280px;
     height: 168px;
     border-radius: 12px;
+    margin-bottom: 8px;
 }
+
+.main_article_title {
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    color: #1f1f1f;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    transition: text-decoration 0.3s ease;  
+}
+
 
 .article_publisher {
     margin-bottom: 6px;
@@ -40,6 +55,20 @@
     height: 12px;
 }
 
+.article_time {
+    font-size: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: "Roboto", sans-serif;
+    line-height: 1.3333333333;
+    height: 16px;
+    color: #444746;
+    margin-top: 8px;
+    white-space: nowrap;
+    font-weight: 400;
+}
+
 .related_article_list {
     margin-top: 8px;
     display: flex;
@@ -47,4 +76,53 @@
     margin-left: 24px;
     flex-grow: 1;
     min-width: 0;
+}
+
+.related_article {
+    font-size: .875rem;
+    color: #444746;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    line-height: 1.4285714286;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-radius: 0 14px 0 0;
+}
+
+.related_article:not(:first-child) {
+    margin-top: 16px;
+}
+
+.related_article_title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    margin-bottom: auto;
+    font-weight: inherit;
+    color: #444746;
+    transition: text-decoration 0.3s ease;
+}
+
+.related_article_time {
+    font-size: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: "Roboto", sans-serif;
+    line-height: 1.3333333333;
+    height: 16px;
+    color: #444746;
+    margin-top: 4px;
+    white-space: nowrap;
+    font-weight: 400;
+}
+
+.main_article:hover .main_article_title,
+.related_article:hover .related_article_title {
+    text-decoration: underline;
 }
