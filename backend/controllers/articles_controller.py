@@ -79,3 +79,10 @@ def get_latest_article(category):
 def get_latest_and_related():
     articles = Article.find_top_latest_and_top_related(3)
     return jsonify({"articles": articles})
+
+
+def get_by_keyword_list(startdate, enddate, keyword, category, publisher):
+    articles = Article.find_by_keywords_in_list(
+        startdate, enddate, keyword, category, publisher
+    )
+    return jsonify({"articles": articles})

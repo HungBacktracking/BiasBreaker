@@ -212,3 +212,27 @@ class Article:
             article["related"] = Article.find_top_related_articles(article["_id"])
             article["_id"] = str(article["_id"])
         return latest_articles
+
+    @staticmethod
+    def find_by_keywords_in_list(startdate, enddate, keyword, category, publisher):
+        if startdate == "00-00-00" and enddate == "00-00-00":
+            startdate = datetime.strptime("01-05-2024", "%d-%m-%Y")
+            enddate = datetime.now() + timedelta(days=1)
+        else:
+            startdate = datetime.strptime(startdate, "%d-%m-%Y")
+            enddate = datetime.strptime(enddate, "%d-%m-%Y")
+        if category == "all":
+            category = Regex(".*")
+        if publisher == "all":
+            publisher = Regex(".*")
+
+        query = {
+            "datetime": {"$gte": startdate, "$lte": enddate},
+            "publisher": publisher,
+            "category": category,
+            "keywords": {"$regex": keyword, "$options": "i"},
+        }
+        articles_list = list(articles.find(query))
+        for article in articles_list:
+            article["_id"] = str(article["_id"])
+        return articles_list

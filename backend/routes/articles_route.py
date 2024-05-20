@@ -14,6 +14,7 @@ from controllers.articles_controller import (
     get_related_articles,
     get_latest_article,
     get_latest_and_related,
+    get_by_keyword_list,
 )
 
 article = Blueprint("article", __name__)
@@ -78,12 +79,12 @@ def get_article_by_keywords_in_title_route(date1, date2, keywords, category, pub
     return get_article_by_keywords_in_title(date1, date2, keywords, category, publisher)
 
 
-@article.route("/articles/latest/category/<category>")
+@article.route("/articles/latest/category/<category>", methods=["GET"])
 def get_latest_article_route(category):
     return get_latest_article(category)
 
 
-@article.route("/articles/date-latest/latest-realated/")
+@article.route("/articles/date-latest/latest-realated/", methods=["GET"])
 def get_latest_and_relate():
     return get_latest_and_related()
 
@@ -91,3 +92,11 @@ def get_latest_and_relate():
 @article.route("/articles/related/<id>")
 def get_top_relate_articles(id):
     return get_related_articles(id)
+
+
+@article.route(
+    "/articles/from/<date1>/to/<date2>/keywords-list/<keywords>/category/<category>/publisher/<publisher>",
+    methods=["GET"],
+)
+def get_by_key_word_route(date1, date2, keywords, category, publisher):
+    return get_by_keyword_list(date1, date2, keywords, category, publisher)
