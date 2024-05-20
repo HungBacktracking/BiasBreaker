@@ -1,5 +1,7 @@
 from database.database import db
 from bson import ObjectId
+from datetime import datetime, timedelta
+from bson.regex import Regex
 
 articles = db["articles"]
 
@@ -51,44 +53,6 @@ class Article:
         return serialized_articles
 
     @staticmethod
-    def find_all_article_by_date(date):
-        articles_list = articles.find({"datetime": date})
-        serialized_articles = []
-        for article in articles_list:
-            article["_id"] = str(article["_id"])
-            serialized_articles.append(article)
-        return serialized_articles
-
-    @staticmethod
-    def find_all_article_by_date_publisher(date, publisher):
-        articles_list = articles.find({"datetime": date, "publisher": publisher})
-        serialized_articles = []
-        for article in articles_list:
-            article["_id"] = str(article["_id"])
-            serialized_articles.append(article)
-        return serialized_articles
-
-    @staticmethod
-    def find_all_article_by_date_category(date, category):
-        articles_list = articles.find({"datetime": date, "category": category})
-        serialized_articles = []
-        for article in articles_list:
-            article["_id"] = str(article["_id"])
-            serialized_articles.append(article)
-        return serialized_articles
-
-    @staticmethod
-    def find_all_article_by_date_publsiher_category(date, publisher, category):
-        articles_list = articles.find(
-            {"datetime": date, "publisher": publisher, "category": category}
-        )
-        serialized_articles = []
-        for article in articles_list:
-            article["_id"] = str(article["_id"])
-            serialized_articles.append(article)
-        return serialized_articles
-
-    @staticmethod
     def push_article(article):
         try:
             result = articles.insert_one(article)
@@ -114,3 +78,67 @@ class Article:
             return True
         else:
             return False
+
+    @staticmethod
+    def find_article_from_to_date(startdate, enddate, category, publisher):
+        articles_list = []
+        if startdate == "00-00-00" and enddate == "00-00-00":  # cho tất cả
+            if category == "all" and publisher == "all":
+                return Article.find_all()
+            else:
+                if publisher == "all":
+                    return Article.find_all_by_category(category)
+                elif category == "all":
+                    return Article.find_all_article_by_publisher(publisher)
+                else:
+                    return Article.find_all_article_by_publisher_category(
+                        publisher, category
+                    )
+        else:
+            if category == "all":
+                category = Regex(".*")
+            if publisher == "all":
+                publisher = Regex(".*")
+            artilces_list_byday = articles.find(
+                {
+                    "datetime": {
+                        "$gte": datetime.strptime(startdate, "%d-%m-%Y"),
+                        "$lte": datetime.strptime(enddate, "%d-%m-%Y"),
+                    },
+                    "publisher": publisher,
+                    "category": category,
+                }
+            )
+            for article in artilces_list_byday:
+                article["_id"] = str(article["_id"])
+                articles_list.append(article)
+            return articles_list
+
+    @staticmethod
+    def find_by_keywords_in_title(startdate, enddate, keyword, category, publisher):
+        if startdate == "00-00-00" and enddate == "00-00-00":
+            startdate = datetime.strptime("01-05-2024", "%d-%m-%Y")
+            enddate = datetime.now() + timedelta(days=1)
+        else:
+            startdate = datetime.strptime(startdate, "%d-%m-%Y")
+            enddate = datetime.strptime(enddate, "%d-%m-%Y")
+        if category == "all":
+            category = Regex(".*")
+        if publisher == "all":
+            publisher = Regex(".*")
+        keyword_pattern = ".*" + ".*".join(keyword.split()) + ".*"
+        print(keyword_pattern)
+        print(startdate, enddate)
+        query = {
+            "datetime": {"$gte": startdate, "$lte": enddate},
+            "publisher": publisher,
+            "category": category,
+            "title": {
+                "$regex": keyword_pattern,
+                "$options": "i",
+            },  # Case-insensitive regex
+        }
+        articles_list = list(articles.find(query))
+        for article in articles_list:
+            article["_id"] = str(article["_id"])
+        return articles_list

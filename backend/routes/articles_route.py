@@ -6,13 +6,11 @@ from controllers.articles_controller import (
     get_all_article_by_category,
     get_all_article_by_publisher,
     get_all_article_by_publisher_category,
-    get_all_article_by_date,
-    get_all_article_by_date_publisher,
-    get_all_article_by_date_category,
-    get_all_article_by_date_publisher_category,
     add_article,
     delete_article,
     update_article_by_id,
+    get_article_from_to_date,
+    get_article_by_keywords_in_title,
 )
 
 article = Blueprint("article", __name__)
@@ -45,35 +43,6 @@ def get_all_article_by_publisher_category_route(publisher_name, category):
     return get_all_article_by_publisher_category(publisher_name, category)
 
 
-@article.route("/articles/<date>/<month>/<year>", methods=["GET"])
-def get_all_article_by_date_route(date, month, year):
-    return get_all_article_by_date(f"{date}-{month}-{year}")
-
-
-@article.route(
-    "/articles/<date>/<month>/<year>/publish/<publisher_name>", methods=["GET"]
-)
-def get_all_article_by_date_publisher_route(date, month, year, publisher_name):
-    return get_all_article_by_date_publisher(f"{date}-{month}-{year}", publisher_name)
-
-
-@article.route("/articles/<date>/<month>/<year>/category/<category>", methods=["GET"])
-def get_all_article_by_date_category_route(date, month, year, category):
-    return get_all_article_by_date_category(f"{date}-{month}-{year}", category)
-
-
-@article.route(
-    "/articles/<date>/<month>/<year>/publish/<publisher_name>/category/<category>",
-    methods=["GET"],
-)
-def get_all_article_by_date_publisher_category_route(
-    date, month, year, publisher_name, category
-):
-    return get_all_article_by_date_publisher_category(
-        f"{date}-{month}-{year}", publisher_name, category
-    )
-
-
 @article.route("/articles/addarticle", methods=["POST"])
 def add_article_route():
     article_post = request.get_json()
@@ -89,3 +58,18 @@ def delete_article_route(id):
 def update_article_route(id):
     article_update = request.get_json()
     return update_article_by_id(id, article_update)
+
+
+@article.route(
+    "/articles/from/<date1>/to/<date2>/category/<category>/publisher/<publisher>"
+)
+def get_article_from_to_date_route(date1, date2, category, publisher):
+    return get_article_from_to_date(date1, date2, category, publisher)
+
+
+@article.route(
+    "/articles/from/<date1>/to/<date2>/keywords/<keywords>/title/category/<category>/publisher/<publisher>",
+    methods=["GET"],
+)
+def get_article_by_keywords_in_title_route(date1, date2, keywords, category, publisher):
+    return get_article_by_keywords_in_title(date1, date2, keywords, category, publisher)
