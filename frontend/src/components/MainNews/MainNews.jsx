@@ -8,6 +8,7 @@ import Heading from './Heading/Heading';
 import TopArticleList from '../TopArticleList/TopArticleList';
 import SmallArticleList from '../SmallArticleList/SmallArticleList';
 import ForYouArticleList from '../ForYouArticleList/ForYouArticleList';
+import HomePageCategoryList from '../HomePageCategoryList/HomePageCategoryList';
 
 function MainNews() {
   	return (
@@ -45,7 +46,7 @@ function MainNews() {
 					initial="hidden"
 					whileInView={"show"}
 					viewport={{ once: false, amount: 0.2 }}
-					className={classes.category_news}>
+					className={classes.news}>
 					
 					<Title name="Các chủ đề nóng" date=""/>
 					<HomePageCategoryList />
