@@ -1,5 +1,5 @@
-from .utils import *
-from . import world
+from utils import *
+import world
 import os
 import requests
 import heapq
@@ -244,3 +244,15 @@ class KeywordExtractor(object):
 # """
 # keyword_extractor = KeywordExtractor()
 # print(keyword_extractor.extract_keywords(text))
+
+text = """Chuỗi sự kiện du lịch hè Bình Định được tổ chức xuyên suốt ba tháng với nhiều hoạt động như VnExpress Marathon, giải TeqBall quốc tế, lễ hội diều,...
+Với chủ đề "Quy Nhơn - Thiên đường biển - Tỏa sáng và phát triển", chuỗi sự kiện thể thao - du lịch hè Bình Đình có hơn 10 hoạt động, diễn ra từ tháng 6 đến tháng 8. Các hoạt động chính bao gồm khai mạc du lịch hè (ngày 8/6); giải TeqBall quốc tế năm 2024 (6-9/6); giải chạy VnExpress Marathon Quy Nhơn 2024 (21-23/6).
+Trong đó, Giải TeqBall, môn thể thao kết hợp bóng đá với bóng bàn, là sự kiện lần đầu tổ chức tại Việt Nam. Với sự tham gia của hơn 50 đội đến từ hơn 50 quốc gia, ban tổ chức dự kiến giải sẽ thu hút hàng nghìn du khách trong nước và quốc tế Quy Nhơn trong những ngày diễn ra. VnExpress Marathon Quy Nhơn mùa thứ 5 cũng là sự kiện thể thao quan trọng của tỉnh khi thu hút hàng chục nghìn lượt runner và người thân đến thành phố. Giải đưa VĐV qua các cung đường chạy nổi tiếng, như một tour du lịch kết hợp với thể thao.
+Trong tháng 6, Bình Định cũng tổ chức hội nghị thúc đẩy đầu tư, phát triển thương mại, du lịch các tỉnh phía Nam với đối tác Ấn Độ; Liên hoan diều Quy Nhơn - Bình Định.
+Ở các tháng còn lại, địa phương đăng cai nhiều sự kiện thể thao lớn như Giải vô địch Điền kinh các nhóm tuổi trẻ quốc gia năm 2024 (26/6-5/7); Giải Bóng đá bãi biển Vô địch quốc gia (11-21/7); Giải vô địch trẻ Kickboxing toàn quốc (22-31/7); Giải Bóng rổ trẻ các nhóm tuổi 3x3 toàn quốc (10-20/8); chương trình "Du lịch, Điện ảnh và Thể thao - Tự hào bản sắc Việt" (tháng 8). Ngoài ra, dự kiến tỉnh có thêm nhiều sự kiện bên lề, sự kiện du lịch cấp tỉnh khác.
+Lãnh đạo địa phương cho biết chuỗi sự kiện nhằm mục đích kích cầu du lịch, thu hút du khách trong nước và quốc tế, các nhà đầu tư đến với Bình Định. Đồng thời, tỉnh muốn xây dựng thương hiệu "điểm đến an toàn, có nét đặc trưng riêng, văn minh, thân thiện và hấp dẫn". Trong dài hạn, tỉnh định hướng hình thành các chuỗi sự kiện du lịch, văn hóa - thể thao tổ chức thường niên.
+Du lịch là một trong những ngành kinh tế mũi nhọn của Bình Định với nhiều sản phẩm về nghỉ dưỡng, vui chơi, thể thao biển, du lịch khoa học, MICE, di sản văn hóa. Địa phương này có bề dày văn hóa - lịch sử, được thiên nhiên ban tặng đường bờ biển dài hơn 130 km với nhiều vũng vịnh, bãi tắm đẹp và danh lam thắng cảnh như đảo Yến, đầm Thị Nại - bán đảo Phương Mai, đồi Ghềnh Ráng - Tiên Sa, hồ Núi Một,... Với 234 di tích lịch sử và hệ thống tháp Chăm, đình, chùa dày đặc, Bình Định có bệ phóng phát triển du lịch văn hóa và tâm linh.
+Theo Sở Du lịch, 3 tháng đầu năm, lượng khách du lịch ước đạt 2,7 triệu lượt, tăng gấp 2,2 lần so với cùng kỳ năm 2023. Tỉnh đặt mục tiêu đón 6 triệu lượt khách trong năm 2024.
+Hoài Phương."""
+predictor = Predictor()
+print(predictor.predict_from_article(text))
