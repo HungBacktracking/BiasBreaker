@@ -31,29 +31,6 @@ def get_all_article_by_publisher_category(publisher, category):
     return jsonify({"articles": articles})
 
 
-def get_all_article_by_date(date):
-    articles = Article.find_all_article_by_date(date)
-    return jsonify({"articles": articles})
-
-
-def get_all_article_by_date_publisher(date, publisher):
-    articles = Article.find_all_article_by_date_publisher(date, publisher)
-    return jsonify({"articles": articles})
-
-
-def get_all_article_by_date_category(date, publisher):
-    articles = Article.find_all_article_by_date_category(date, publisher)
-    return jsonify({"articles": articles})
-
-
-def get_all_article_by_date_publisher_category(date, publisher, category):
-    articles = Article.find_all_article_by_date_publsiher_category(
-        date, publisher, category
-    )
-    print(date, publisher, category)
-    return jsonify({"articles": articles})
-
-
 def add_article(article):
     _id = Article.push_article(article)
     if _id is not None:
@@ -74,3 +51,17 @@ def update_article_by_id(article_id, update_article):
         return jsonify({"message": "Update"})
     else:
         return jsonify({"error": "Cannot update"}), 404
+
+
+def get_article_from_to_date(startdate, enddate, category, publisher):
+    articles = Article.find_article_from_to_date(
+        startdate, enddate, category, publisher
+    )
+    return jsonify({"articles": articles})
+
+
+def get_article_by_keywords_in_title(startdate, enddate, keyword, category, publisher):
+    articles = Article.find_by_keywords_in_title(
+        startdate, enddate, keyword, category, publisher
+    )
+    return jsonify({"articles": articles})
