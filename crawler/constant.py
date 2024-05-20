@@ -2,7 +2,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 
 NUMBER_OF_THREADS = 3
-start_date = "15-05-2024"
+start_date = "18-05-2024"
 end_date = "19-05-2024"
 
 # Path to your Chrome user profile

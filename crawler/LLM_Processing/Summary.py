@@ -15,4 +15,4 @@ def insert_summaries(dataset):
             print("Error while summarizing")
 
         data["summaries"] = summary_content
-        time.sleep(30)
+        time.sleep(35)

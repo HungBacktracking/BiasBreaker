@@ -14,5 +14,5 @@ def insert_predict(dataset):
             print("Error while predicting")
 
         article['prediction'] = prediction
-        time.sleep(20)
+        time.sleep(35)
 

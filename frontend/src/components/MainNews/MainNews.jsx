@@ -46,6 +46,9 @@ function MainNews() {
 					whileInView={"show"}
 					viewport={{ once: false, amount: 0.2 }}
 					className={classes.category_news}>
+					
+					<Title name="Các chủ đề nóng" date=""/>
+					<HomePageCategoryList />
 				</motion.div>
 			</main>
 		</div>

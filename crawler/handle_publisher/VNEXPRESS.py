@@ -74,7 +74,9 @@ def get_key_words(soup_of_a_paper):
         keywords = elem["content"].split(",")
         for i in range(len(keywords)):
             keywords[i] = keywords[i].strip()
-        return keywords
+
+        finalKeywords = [item for item in keywords if item != "Tin nóng"]
+        return finalKeywords
     except:
         return None
 

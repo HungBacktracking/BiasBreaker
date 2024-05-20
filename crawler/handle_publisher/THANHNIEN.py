@@ -30,7 +30,9 @@ def get_info(soup_of_a_paper):
         keywords = meta_tag["content"].split(",")
         for i in range(len(keywords)):
             keywords[i] = keywords[i].strip()
-        return text_, img, keywords
+
+        finalKeywords = [item for item in keywords if item != "Tin nóng"]
+        return text_, img, finalKeywords
     except:
         return None
 
@@ -113,7 +115,7 @@ def crawl(driver, dataset, date1, date2):  # date1 > date2
     time.sleep(10.1)
     SCROLL_PAUSE_TIME = 3.5
     last_height = driver.execute_script("return document.body.scrollHeight")
-    for i in range(50):  # change this for deeper
+    for i in range(30):  # change this for deeper
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(SCROLL_PAUSE_TIME)
 

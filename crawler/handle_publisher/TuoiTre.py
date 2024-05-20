@@ -49,7 +49,7 @@ def processing(driver, articles, url, start_date):
     time.sleep(2.1)
     SCROLL_PAUSE_TIME = 3.5
     last_height = driver.execute_script("return document.body.scrollHeight")
-    for i in range(50):
+    for i in range(30):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(SCROLL_PAUSE_TIME)
 
@@ -103,6 +103,7 @@ def processing(driver, articles, url, start_date):
         if current < start_date:
             break
 
+        finalKeywords = [item for item in keywords if item != "Tin nóng"]
         article = {
             "publisher": "Tuổi trẻ",
             "publisher_logo": "https://encrypted-tbn2.gstatic.com/faviconV2?url=https%3A%2F%2Ftuoitre.vn&client=NEWS_360&size=96&type=FAVICON&fallback_opts=TYPE%2CSIZE%2CURL&fbclid=IwAR0LG0rHUT-m_kzoodvEWLt0FrJsD31_CHZ4odoDD_pysc-nWcldEqoA7bM",
@@ -112,7 +113,7 @@ def processing(driver, articles, url, start_date):
             "category": category.lower(),
             "content": content,
             "datetime": current,
-            "keywords": keywords,
+            "keywords": finalKeywords,
         }
         articles.append(article)
 
