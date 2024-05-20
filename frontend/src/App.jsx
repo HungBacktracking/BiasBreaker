@@ -4,7 +4,6 @@ import HomePage from './pages/HomePage';
 import Header from './components/Header/Header';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import About from './pages/About';
 import CategoryPage from './pages/CategoryPage';
 
 function App() {
@@ -16,7 +15,6 @@ function App() {
         <Route path='/category/:category' element={<CategoryPage />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   );
