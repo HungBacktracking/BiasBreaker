@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import CryptoJS from 'crypto-js';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../auth/AuthContext';
 
 export default function SingIn() {
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({});
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,8 +45,7 @@ export default function SingIn() {
         return;
       }
 
-      localStorage.setItem('token', data.access_token);
-
+      login(data.access_token);
       navigate('/');
     } catch (error) {
       setLoading(false);

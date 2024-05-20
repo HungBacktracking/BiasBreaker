@@ -23,6 +23,12 @@ header {
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .header_top {
   padding: 8px;
   flex: 1 0 auto;

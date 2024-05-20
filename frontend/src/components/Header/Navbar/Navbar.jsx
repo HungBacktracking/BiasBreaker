@@ -37,6 +37,11 @@ function Navbar() {
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link}  exact to="/category/công nghệ">
+                Công nghệ
+              </NavLink>
+            </div>
+            <div className={classes.nav_bar_item}>
               <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/category/kinh doanh">
                 Kinh doanh
               </NavLink>
