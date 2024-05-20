@@ -25,6 +25,7 @@ def get_all_article_by_publisher(publisher):
     articles = Article.find_all_article_by_publisher(publisher)
     return jsonify({"articles": articles})
 
+
 def get_prediction(request):
     article_id = request.get("id")
     article = Article.find_one(article_id)
@@ -32,14 +33,15 @@ def get_prediction(request):
     if not article:
         return jsonify({"error": "Article not found"}), 404
     if "prediction" in article:
-        return jsonify({'prediction': article['prediction']}), 200
-    
+        return jsonify({"prediction": article["prediction"]}), 200
+
     predictor = Predictor()
-    prediction = predictor.predict_from_article(article['content'])
-    article['prediction'] = prediction
+    prediction = predictor.predict_from_article(article["content"])
+    article["prediction"] = prediction
     Article.update_article(article_id, article)
 
     return jsonify({"message": "Prediction generated", "prediction": prediction})
+
 
 def get_summary(request):
     article_id = request.get("id")
@@ -48,11 +50,11 @@ def get_summary(request):
     if not article:
         return jsonify({"error": "Article not found"}), 404
     if "summary" in article:
-        return jsonify({'summary': article['summary']}), 200
-    
+        return jsonify({"summary": article["summary"]}), 200
+
     summarizer = TextSummarizer()
-    summary = summarizer.summarize(article['content'])
-    article['summary'] = summary
+    summary = summarizer.summarize(article["content"])
+    article["summary"] = summary
     Article.update_article(article_id, article)
 
     return jsonify({"message": "Summary generated", "summary": summary})
@@ -119,3 +121,8 @@ def get_by_keyword_list(startdate, enddate, keyword, category, publisher):
         startdate, enddate, keyword, category, publisher
     )
     return jsonify({"articles": articles})
+
+
+def count_keywords(startdate, enddate, publisher):
+    keywords = Article.count_keywords(startdate, enddate, publisher)
+    return jsonify({"keywords_count": keywords})

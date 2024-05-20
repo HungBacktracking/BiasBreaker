@@ -236,3 +236,35 @@ class Article:
         for article in articles_list:
             article["_id"] = str(article["_id"])
         return articles_list
+
+    @staticmethod
+    def count_keywords(startdate, enddate, publisher):
+        if startdate == "00-00-00" and enddate == "00-00-00":
+            startdate = datetime.strptime("01-05-2024", "%d-%m-%Y")
+            enddate = datetime.now() + timedelta(days=1)
+        else:
+            startdate = datetime.strptime(startdate, "%d-%m-%Y")
+            enddate = datetime.strptime(enddate, "%d-%m-%Y")
+        if publisher == "all":
+            publisher = Regex(".*")
+
+        pipeline = [
+            {
+                "$match": {
+                    "datetime": {"$gte": startdate, "$lt": enddate + timedelta(days=1)},
+                    "publisher": publisher,
+                }
+            },
+            {"$unwind": "$keywords"},  # nested keywords
+            {
+                "$group": {
+                    "_id": "$keywords",  # Group by the keywords field
+                    "count": {"$sum": 1},  # Count occurrences for each keyword
+                }
+            },
+        ]
+        result = list(articles.aggregate(pipeline))
+        dict_count = {}
+        for key in result:
+            dict_count[key["_id"]] = key["count"]
+        return dict_count
