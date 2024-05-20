@@ -15,7 +15,7 @@ function MainNews() {
 		<div className={classes.full_height}>
 			<main className={classes.main_container}>
 				<div className={classes.news}>
-						<Title	name="Báo chí hôm nay" date="Thứ Bảy, 19 tháng 5"/>
+						<Title	name="Báo chí hôm nay" description="Thứ Bảy, 19 tháng 5"/>
 						<div className={classes.news_list}>
 							<div className={classes.top_news}>
 								<Heading title='Tin tức hàng đầu'/>
@@ -38,7 +38,7 @@ function MainNews() {
 					viewport={{ once: false, amount: 0.1 }}
 					className={classes.news}>
 					
-					<Title name="Dành cho bạn" date="Đề xuất dựa trên sở thích của riêng bạn"/>
+					<Title name="Dành cho bạn" description="Đề xuất dựa trên sở thích của riêng bạn"/>
 					<ForYouArticleList />
 				</motion.div>
 				<motion.div
@@ -48,7 +48,7 @@ function MainNews() {
 					viewport={{ once: false, amount: 0.01 }}
 					className={classes.news}>
 					
-					<Title name="Các chủ đề nóng" date="Báo mới ra lò, vừa thổi vừa xem"/>
+					<Title name="Các chủ đề nóng" description="Báo mới ra lò, vừa thổi vừa xem"/>
 					<HomePageCategoryList />
 				</motion.div>
 			</main>

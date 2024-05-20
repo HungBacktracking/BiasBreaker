@@ -1,11 +1,11 @@
 import classes from './Title.module.css';
 
-function Title({name, date}) {
+function Title({name, description}) {
   return (
     <>
 			<div className={classes.title}>
 					<h1 className={classes.title_name}>{name}</h1>
-					<p className={classes.title_date}>{date}</p>
+					<p className={classes.title_date}>{description}</p>
 			</div>
     </>
   );
