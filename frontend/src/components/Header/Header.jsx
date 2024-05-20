@@ -28,10 +28,10 @@ function Header() {
               </div>
             </div>
             <img className={`${classes.avatar} ${classes.circle}`} src="/image/avatar_full.jpg" alt="Avatar" /> */}
-            <Link href="/about">
+            <Link to="/about">
               <Button variant="stroke">About us</Button>
             </Link>
-            <Link href="/sign-up">
+            <Link to="/sign-up">
               <Button>
                 Sign up now <IoIosArrowRoundForward className="text-lg font-semibold" />
               </Button>

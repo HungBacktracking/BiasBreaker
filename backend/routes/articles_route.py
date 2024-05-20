@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request
-from ..controllers.articles_controller import (
+from controllers.articles_controller import (
     get_article,
     get_all_article,
     get_all_article_by_category,

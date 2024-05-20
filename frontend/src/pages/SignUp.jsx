@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import bcrypt from 'bcryptjs';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -12,15 +17,26 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Hash the password before sending to backend
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
+    const user = {
+        email: email,
+        password: hashedPassword,
+    };
+
     try {
+      console.log(JSON.stringify(formData));
       setLoading(true);
       setError(false);
-      const res = await fetch('http://localhost:8080/signup', {
+      const res = await fetch('http://127.0.0.1:5000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(user),
       });
       const data = await res.json();
       setLoading(false);
@@ -30,6 +46,7 @@ export default function SignUp() {
       }
       navigate('/sign-in');
     } catch (error) {
+      console.error(error);
       setLoading(false);
       setError(true);
     }
@@ -43,14 +60,14 @@ export default function SignUp() {
           placeholder="Email"
           id="email"
           className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
           id="password"
           className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <input
           type="password"

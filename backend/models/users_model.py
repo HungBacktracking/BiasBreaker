@@ -1,4 +1,4 @@
-from ..database.database import db
+from database.database import db
 from bson import ObjectId
 
 users = db["users"]
@@ -20,7 +20,7 @@ class User:
     @staticmethod
     def create(email, password):
         user = User(email, password)
-        users.insert_one(user.__dict__)
+        users.insert_one(user.to_dict())
         return user
 
     @staticmethod
@@ -50,5 +50,5 @@ class User:
             return False
         return user["password"] == password
 
-    def __dict__(self):
+    def to_dict(self):
         return {"email": self.email, "password": self.password}
