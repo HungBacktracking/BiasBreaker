@@ -7,6 +7,7 @@ import Title from './Title/Title';
 import Heading from './Heading/Heading';
 import TopArticleList from '../TopArticleList/TopArticleList';
 import SmallArticleList from '../SmallArticleList/SmallArticleList';
+import ForYouArticleList from '../ForYouArticleList/ForYouArticleList';
 
 function MainNews() {
   	return (
@@ -37,7 +38,7 @@ function MainNews() {
 					className={classes.news}>
 					
 					<Title name="Dành cho bạn" date="Đề xuất dựa trên sở thích của riêng bạn"/>
-					<div className={classes.main_for_you}></div>
+					<ForYouArticleList />
 				</motion.div>
 				<motion.div
 					variants={fadeIn("up", 0.3)}
@@ -45,8 +46,6 @@ function MainNews() {
 					whileInView={"show"}
 					viewport={{ once: false, amount: 0.2 }}
 					className={classes.category_news}>
-					
-
 				</motion.div>
 			</main>
 		</div>
