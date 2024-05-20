@@ -78,7 +78,7 @@ def get_article_by_keywords_in_title_route(date1, date2, keywords, category, pub
     return get_article_by_keywords_in_title(date1, date2, keywords, category, publisher)
 
 
-@article.route("/articles/latest/<category>/category")
+@article.route("/articles/latest/category/<category>")
 def get_latest_article_route(category):
     return get_latest_article(category)
 

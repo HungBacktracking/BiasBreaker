@@ -16,6 +16,8 @@ class Article:
     @staticmethod
     def find_one(id):
         article = articles.find_one({"_id": ObjectId(id)})
+        print(article)
+        article["_id"] = str(article["_id"])
         return article
 
     @staticmethod
@@ -148,11 +150,6 @@ class Article:
     @staticmethod
     def find_top_related_articles(id, limit=3):
         given_article = articles.find_one({"_id": ObjectId(id)})
-        if "related" in given_article:
-            articles = list(articles.find({"_id": {"$in": given_article["related"]}}))
-            for article in articles:
-                article["_id"] = str(article["_id"])
-            return articles
         related_article_list = list(
             articles.find(
                 {
@@ -193,15 +190,10 @@ class Article:
         # Get indices of top 3 similar articles
         top_indices = similarities.argsort()[-limit:][::-1]
         top_related_articles = []
-        top_related_id = []
         for i in top_indices:
             article = related_article_list[i]
-            top_related_id.append(article["_id"])
             article["_id"] = str(article["_id"])
             top_related_articles.append(article)
-        articles.update_one(
-            {"_id": ObjectId(id)}, {"$set": {"related": top_related_id}}
-        )
         return top_related_articles
 
     @staticmethod
@@ -217,6 +209,6 @@ class Article:
     def find_top_latest_and_top_related(limit=3):
         latest_articles = list(articles.find().sort("datetime", -1).limit(limit))
         for article in latest_articles:
-            articles["_id"] = str(articles["_id"])
-            article["related"] = Article.find_top_related_articles(articles["_id"])
+            article["related"] = Article.find_top_related_articles(article["_id"])
+            article["_id"] = str(article["_id"])
         return latest_articles
