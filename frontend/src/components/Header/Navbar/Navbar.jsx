@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import classes from './Navbar.module.css';
 
 function Navbar() {
@@ -8,47 +9,52 @@ function Navbar() {
         <div className={classes.header_bottom_wrapper}>
           <div className={classes.header_bottom_wrapper_2}>
             <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/">
                 Trang chủ
-              </a>
+              </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/for-you">
                 Dành cho bạn
-              </a>
+              </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/trending">
                 Thịnh hành
-              </a>
+              </NavLink>
             </div>
             <div className={classes.separate_wrapper}>
               <div className={classes.separate}></div>
             </div>
             <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
-                Việt Nam
-              </a>
-            </div>
-            <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/category/thế giới">
                 Thế giới
-              </a>
+              </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
-                Kinh tế
-              </a>
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/category/chính trị">
+                Chính trị
+              </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/category/kinh doanh">
+                Kinh doanh
+              </NavLink>
+            </div>
+            <div className={classes.nav_bar_item}>
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/category/giải trí">
                 Giải trí
-              </a>
+              </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <a className={classes.nav_link} href="#">
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/category/thể thao">
                 Thể thao
-              </a>
+              </NavLink>
+            </div>
+            <div className={classes.nav_bar_item}>
+              <NavLink className={classes.nav_link} activeClassName={classes.active} exact to="/category/du lịch">
+                Du lịch
+              </NavLink>
             </div>
           </div>
         </div>

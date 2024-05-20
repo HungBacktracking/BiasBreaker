@@ -138,3 +138,7 @@
     height: calc(100% - 32px);
     background: #e3e3e3;
 }
+
+.content:hover .article_title {
+    text-decoration: underline;
+}

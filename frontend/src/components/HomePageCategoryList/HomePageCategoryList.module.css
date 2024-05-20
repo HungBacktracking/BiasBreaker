@@ -132,3 +132,7 @@
 .category_item:first-child > .separate {
     margin-top: 8px;
 }
+
+.content:hover .article_title {
+    text-decoration: underline;
+}
