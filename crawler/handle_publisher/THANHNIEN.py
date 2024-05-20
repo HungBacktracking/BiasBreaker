@@ -36,6 +36,7 @@ def get_info(soup_of_a_paper):
 
 
 def crawl_article_by_date(start_date, end_date, links_elems, dataset):
+    start_date, end_date = end_date, start_date
     date1 = datetime.strptime(start_date, "%d-%m-%Y")
     date2 = datetime.strptime(end_date, "%d-%m-%Y")
     category_list = [
@@ -134,14 +135,14 @@ def crawl(driver, dataset, date1, date2):  # date1 > date2
 # uncomment for testing
 # driver = webdriver.Chrome()
 # dataset = []
-# crawl(driver, dataset, "20-05-2024", "20-05-2024")
+# crawl(driver, dataset, "19-05-2024", "20-05-2024")
 
 
 # print(len(dataset))
-# print(dataset[0]["title"])
-# print(dataset[0]["content"])
-# print(dataset[0]["image"])
-# print(dataset[0]["datetime"])
-# print(dataset[0]["info_link"])
-# print(dataset[0]["keywords"])
-# print(dataset[0]["publisher"])
+# print(dataset[-1]["title"])
+# print(dataset[-1]["content"])
+# print(dataset[-1]["image"])
+# print(dataset[-1]["datetime"])
+# print(dataset[-1]["info_link"])
+# print(dataset[-1]["keywords"])
+# print(dataset[-1]["publisher"])
