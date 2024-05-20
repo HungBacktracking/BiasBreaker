@@ -8,7 +8,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import StuffDocumentsChain
 from langchain.chains.llm import LLMChain
-from langchain.chains.qa_with_sources import load_qa_with_sources_chain
 from langchain.text_splitter import TokenTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.schema.document import Document
@@ -19,7 +18,6 @@ genai.configure(api_key=world.GOOGLE_API_KEY)
 
 import warnings
 from langchain_core._api.deprecation import LangChainDeprecationWarning
-
 warnings.filterwarnings("ignore", category=LangChainDeprecationWarning)
 
 os.environ["GOOGLE_API_KEY"] = world.GOOGLE_API_KEY
