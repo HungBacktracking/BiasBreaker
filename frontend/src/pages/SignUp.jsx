@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import bcrypt from 'bcryptjs';
+import CryptoJS from 'crypto-js';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
@@ -19,8 +19,7 @@ export default function SignUp() {
     e.preventDefault();
 
     // Hash the password before sending to backend
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
+    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
 
     const user = {
         email: email,
@@ -40,7 +39,7 @@ export default function SignUp() {
       });
       const data = await res.json();
       setLoading(false);
-      if (data.success === false) {
+      if (!res.ok) {
         setError(true);
         return;
       }

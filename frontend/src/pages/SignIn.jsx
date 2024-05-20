@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import CryptoJS from 'crypto-js';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function SingIn() {
   const [formData, setFormData] = useState({});
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -12,23 +16,35 @@ export default function SingIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Hash the password before sending to backend
+    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+
+    const user = {
+        email: email,
+        password: hashedPassword,
+    };
+
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch('http://localhost:8080/signin', {
+      const res = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(user),
       });
       const data = await res.json();
       console.log(data);
       setLoading(false);
-      if (data.success === false) {
+      if (!res.ok) {
         setError(true);
         return;
       }
+
+      localStorage.setItem('token', data.access_token);
+
       navigate('/');
     } catch (error) {
       setLoading(false);
@@ -44,14 +60,14 @@ export default function SingIn() {
           placeholder="Email"
           id="email"
           className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
           id="password"
           className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button
           disabled={loading}
