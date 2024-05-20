@@ -35,7 +35,7 @@ function MainNews() {
 					variants={fadeIn("up", 0.3)}
 					initial="hidden"
 					whileInView={"show"}
-					viewport={{ once: false, amount: 0.2 }}
+					viewport={{ once: false, amount: 0.1 }}
 					className={classes.news}>
 					
 					<Title name="Dành cho bạn" date="Đề xuất dựa trên sở thích của riêng bạn"/>
@@ -45,10 +45,10 @@ function MainNews() {
 					variants={fadeIn("up", 0.3)}
 					initial="hidden"
 					whileInView={"show"}
-					viewport={{ once: false, amount: 0.2 }}
+					viewport={{ once: false, amount: 0.01 }}
 					className={classes.news}>
 					
-					<Title name="Các chủ đề nóng" date=""/>
+					<Title name="Các chủ đề nóng" date="Báo mới ra lò, vừa thổi vừa xem"/>
 					<HomePageCategoryList />
 				</motion.div>
 			</main>

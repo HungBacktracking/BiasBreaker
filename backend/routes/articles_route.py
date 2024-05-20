@@ -3,6 +3,8 @@ from flask import request
 from controllers.articles_controller import (
     get_article,
     get_all_article,
+    get_summary,
+    get_prediction,
     get_all_article_by_category,
     get_all_article_by_publisher,
     get_all_article_by_publisher_category,
@@ -34,6 +36,14 @@ def get_all_article_by_category_route(category):
 @article.route("/articles/publisher/<publisher_name>", methods=["GET"])
 def get_all_article_by_publisher_route(publisher_name):
     return get_all_article_by_publisher(publisher_name)
+
+@article.route("/get_summary", methods=["POST"])
+def get_summary_route():
+    return get_summary(request.json)
+
+@article.route("/get_prediction", methods=["POST"])
+def get_prediction_route():
+    return get_prediction(request.json)
 
 
 @article.route(
