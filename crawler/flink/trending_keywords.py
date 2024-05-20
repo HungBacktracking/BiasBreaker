@@ -7,17 +7,15 @@ import logging
 import sys
 
 from pyflink.common import WatermarkStrategy, Encoder, Types, Row
+from pyflink.common.serialization import SimpleStringSchema
 from pyflink.datastream import StreamExecutionEnvironment, RuntimeExecutionMode
-from pyflink.datastream.connectors.file_system import (FileSource, StreamFormat, FileSink,
-                                                       OutputFileConfig, RollingPolicy)
-
+from pyflink.datastream.connectors.file_system import (FileSource, StreamFormat, FileSink, OutputFileConfig, RollingPolicy)
+from pyflink.datastream.connectors import FlinkKafkaProducer
 
 # MongoDB connection URI
 uri = f"mongodb+srv://{config.USER}:{config.PASSWORD}@cluster0.izgloib.mongodb.net"
 
 def fetch_articles(start_date, end_date):
-    start_date = start_date.strftime('%d-%m-%Y')
-    end_date = end_date.strftime('%d-%m-%Y')
     with MongoClient(uri) as client:
         db = client['BiasBreakerDatabase']
         collection = db['articles']
@@ -77,7 +75,9 @@ def keyword_count(date=None, mode='daily', top_n=10, output_path=None):
             for keyword, count in sorted_data:
                 f.write(f"{keyword}: {count}\n")
     
+    # Define the sink
     ds.print()
+    
     # Execute the job
     env.execute("Keyword Count")
 
