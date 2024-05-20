@@ -2,6 +2,8 @@ from database.database import db
 from bson import ObjectId
 from datetime import datetime, timedelta
 from bson.regex import Regex
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 articles = db["articles"]
 
@@ -142,3 +144,79 @@ class Article:
         for article in articles_list:
             article["_id"] = str(article["_id"])
         return articles_list
+
+    @staticmethod
+    def find_top_related_articles(id, limit=3):
+        given_article = articles.find_one({"_id": ObjectId(id)})
+        if "related" in given_article:
+            articles = list(articles.find({"_id": {"$in": given_article["related"]}}))
+            for article in articles:
+                article["_id"] = str(article["_id"])
+            return articles
+        related_article_list = list(
+            articles.find(
+                {
+                    "category": given_article["category"],
+                    "datetime": {
+                        "$gte": given_article["datetime"] - timedelta(days=3),
+                        "$lt": given_article["datetime"] + timedelta(days=1),
+                    },
+                }
+            )
+        )
+        title_and_contetnt = [
+            data_["title"] + " " + data_["content"] for data_ in related_article_list
+        ]
+        tfidf_vectorizer = TfidfVectorizer()
+        tfidf_matrix = tfidf_vectorizer.fit_transform(title_and_contetnt)
+
+        # Compute cosine similarity matrix
+        similarity_matrix = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+        # Find top 5 similar articles for each article
+        given_article_index = next(
+            (
+                i
+                for i, article in enumerate(related_article_list)
+                if article["_id"] == given_article["_id"]
+            ),
+            None,
+        )
+
+        if given_article_index is None:
+            return []
+
+        # Exclude self-similarity
+        similarities = similarity_matrix[given_article_index].copy()
+        similarities[given_article_index] = -1
+
+        # Get indices of top 3 similar articles
+        top_indices = similarities.argsort()[-limit:][::-1]
+        top_related_articles = []
+        top_related_id = []
+        for i in top_indices:
+            article = related_article_list[i]
+            top_related_id.append(article["_id"])
+            article["_id"] = str(article["_id"])
+            top_related_articles.append(article)
+        articles.update_one(
+            {"_id": ObjectId(id)}, {"$set": {"related": top_related_id}}
+        )
+        return top_related_articles
+
+    @staticmethod
+    def find_top_latest_articles(category, limit=3):
+        latest_articles = list(
+            articles.find({"category": category}).sort("datetime", -1).limit(limit)
+        )
+        for article in latest_articles:
+            article["_id"] = str(article["_id"])
+        return latest_articles
+
+    @staticmethod
+    def find_top_latest_and_top_related(limit=3):
+        latest_articles = list(articles.find().sort("datetime", -1).limit(limit))
+        for article in latest_articles:
+            articles["_id"] = str(articles["_id"])
+            article["related"] = Article.find_top_related_articles(articles["_id"])
+        return latest_articles

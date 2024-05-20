@@ -11,6 +11,9 @@ from controllers.articles_controller import (
     update_article_by_id,
     get_article_from_to_date,
     get_article_by_keywords_in_title,
+    get_related_articles,
+    get_latest_article,
+    get_latest_and_related,
 )
 
 article = Blueprint("article", __name__)
@@ -73,3 +76,18 @@ def get_article_from_to_date_route(date1, date2, category, publisher):
 )
 def get_article_by_keywords_in_title_route(date1, date2, keywords, category, publisher):
     return get_article_by_keywords_in_title(date1, date2, keywords, category, publisher)
+
+
+@article.route("/articles/latest/<category>/category")
+def get_latest_article_route(category):
+    return get_latest_article(category)
+
+
+@article.route("/articles/date-latest/latest-realated/")
+def get_latest_and_relate():
+    return get_latest_and_related()
+
+
+@article.route("/articles/related/<id>")
+def get_top_relate_articles(id):
+    return get_related_articles(id)
