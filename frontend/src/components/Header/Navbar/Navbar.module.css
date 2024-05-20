@@ -1,41 +1,44 @@
 .header_bottom {
+  -webkit-transition: background-color .4s;
+  -webkit-transition: background-color .4s;
+  transition: background-color .4s;
   font: 13px / 27px Roboto, Arial, sans-serif;
 }
 
 .header_bottom_wrapper {
   display: flex;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal;
   flex-direction: row;
+  -webkit-box-align: center;
+  box-align: center;
+  align-items: center;
   height: 48px;
+  border-bottom: 1px solid #dadce0;
   box-pack: center;
   -webkit-box-pack: center;
   justify-content: center;
-  border-bottom: 1px solid #dadce0;
 }
 
 .header_bottom_wrapper_2 {
   display: flex;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal;
   flex-direction: row;
+  overflow: hidden;
   margin-top: auto;
 }
 
 .nav_bar_item {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #5f6368;
   margin: 4px 16px;
-  font-family: "Google Sans", sans-serif;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.nav_link {
-  font-size: 15px;
-  color: #5f6368;
-  margin: 4px 16px;
+  margin-bottom: 0;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   cursor: pointer;
-  text-decoration: none;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav_link:hover {
@@ -47,6 +50,7 @@
 }
 
 .nav_link.active::after {
+  position: relative;
   content: "";
   display: block;
   height: 4px;
