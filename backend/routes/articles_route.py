@@ -19,6 +19,7 @@ from controllers.articles_controller import (
     get_latest_and_related,
     get_by_keyword_list,
     count_keywords,
+    get_latest_by_category_and_limit,
 )
 
 article = Blueprint("article", __name__)
@@ -52,6 +53,7 @@ def get_summary_route():
 @article.route("/get_prediction", methods=["POST"])
 def get_prediction_route():
     return get_prediction(request.json)
+
 
 @article.route("/get_recommendation", methods=["POST"])
 def get_recommendation_route():
@@ -126,3 +128,8 @@ def get_by_key_word_route(date1, date2, keywords, category, publisher):
 )  # count for statitic
 def get_static_keywords(date1, date2, publisher):
     return count_keywords(date1, date2, publisher)
+
+
+@article.route("/aricles/latest/by-category/<category>/limit/<limit>", methods=["GET"])
+def get_latest_by_category_and_limit_route(category, limit):
+    return get_latest_by_category_and_limit(category, int(limit))

@@ -26,6 +26,7 @@ def get_all_article_by_publisher(publisher):
     articles = Article.find_all_article_by_publisher(publisher)
     return jsonify({"articles": articles})
 
+
 def get_recommendation(request):
     article_id = request.get("id")
     article = Article.find_one(article_id)
@@ -139,3 +140,8 @@ def get_by_keyword_list(startdate, enddate, keyword, category, publisher):
 def count_keywords(startdate, enddate, publisher):
     keywords = Article.count_keywords(startdate, enddate, publisher)
     return jsonify({"keywords_count": keywords})
+
+
+def get_latest_by_category_and_limit(category, limit):
+    articles = Article.find_latest_by_category_and_limit(category, limit)
+    return jsonify({"articles": articles})

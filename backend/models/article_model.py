@@ -16,9 +16,11 @@ class Article:
     @staticmethod
     def find_one(id):
         article = articles.find_one({"_id": ObjectId(id)})
-        print(article)
-        article["_id"] = str(article["_id"])
-        return article
+        if article:
+            article["_id"] = str(article["_id"])
+            return article
+        else:
+            return None
 
     @staticmethod
     def find_all():
@@ -268,3 +270,12 @@ class Article:
         for key in result:
             dict_count[key["_id"]] = key["count"]
         return dict_count
+
+    @staticmethod
+    def find_latest_by_category_and_limit(category, limit):
+        latest_articles = list(
+            articles.find({"category": category}).sort("datetime", -1).limit(limit)
+        )
+        for article in latest_articles:
+            article["_id"] = str(article["_id"])
+        return latest_articles
