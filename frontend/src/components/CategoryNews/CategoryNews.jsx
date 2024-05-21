@@ -64,18 +64,18 @@ const CategoryNews = ({ category, description }) => {
     }, [articleList]);
 
     return (
-        <div className={classes.full_height}>
-			<main className={classes.main_container}>
-				<div className={classes.news}>
-						<Title	name={categoryText} description={description}/>
-                        <div className={classes.news_list}>
-                            {articleList.map(article => (
-                                <CategoryNewsItem key={article.id} article={article} />
-                            ))}
-                        </div>
-				</div>
-			</main>
-		</div>
+      <div className={classes.full_height}>
+        <main className={classes.main_container}>
+          <div className={classes.news}>
+            <Title	name={categoryText} description={description}/>
+              <div className={classes.news_list}>
+                  {articleList.map(article => (
+                      <CategoryNewsItem key={article.id} article={article} />
+                  ))}
+              </div>
+          </div>
+        </main>
+      </div>
     );
 }
 

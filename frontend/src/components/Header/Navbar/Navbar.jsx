@@ -9,17 +9,17 @@ function Navbar() {
         <div className={classes.header_bottom_wrapper}>
           <div className={classes.header_bottom_wrapper_2}>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/">
                 Trang chủ
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/for-you">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/for-you">
                 Dành cho bạn
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/trending">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/trending">
                 Thịnh hành
               </NavLink>
             </div>
@@ -27,37 +27,37 @@ function Navbar() {
               <div className={classes.separate}></div>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/category/thế giới">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/category/thế giới">
                 Thế giới
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link}  exact to="/category/chính trị">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link}  to="/category/chính trị">
                 Chính trị
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link}  exact to="/category/công nghệ">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/category/công nghệ">
                 Công nghệ
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/category/kinh doanh">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/category/kinh doanh">
                 Kinh doanh
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/category/giải trí">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/category/giải trí">
                 Giải trí
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/category/thể thao">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/category/thể thao">
                 Thể thao
               </NavLink>
             </div>
             <div className={classes.nav_bar_item}>
-              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} exact to="/category/du lịch">
+              <NavLink className={({ isActive }) => isActive ? `${classes.nav_link} ${classes.active}` : classes.nav_link} to="/category/du lịch">
                 Du lịch
               </NavLink>
             </div>
