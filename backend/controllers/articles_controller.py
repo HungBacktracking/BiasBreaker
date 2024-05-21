@@ -1,6 +1,7 @@
 from flask import jsonify
 from models.article_model import Article
 from LLM_Models.model import Predictor, TextSummarizer
+from recommender.main import Recommender
 
 
 def get_article(article_id):
@@ -24,6 +25,18 @@ def get_all_article_by_category(category):
 def get_all_article_by_publisher(publisher):
     articles = Article.find_all_article_by_publisher(publisher)
     return jsonify({"articles": articles})
+
+def get_recommendation(request):
+    article_id = request.get("id")
+    article = Article.find_one(article_id)
+
+    if not article:
+        return jsonify({"error": "Article not found"}), 404
+
+    recommender = Recommender()
+    recommendations = recommender.get_recommendations_from_item(article_id)
+
+    return jsonify({"recommendations": recommendations})
 
 
 def get_prediction(request):
