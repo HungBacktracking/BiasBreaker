@@ -145,3 +145,18 @@ def count_keywords(startdate, enddate, publisher):
 def get_latest_by_category_and_limit(category, limit):
     articles = Article.find_latest_by_category_and_limit(category, limit)
     return jsonify({"articles": articles})
+
+
+def get_top_keywords_and_articles(startdate, enddate, limit):
+    data = Article.find_top_keywords_and_articles(startdate, enddate, limit)
+    return jsonify({"keywords": data})
+
+
+def get_latest_paper_by_keywords(keywords, limit):
+    articles = Article.find_latest_paper_by_keywords(keywords, limit)
+    return jsonify({"articles": articles})
+
+
+def get_latest_top_keywords_of_nearest_day(limit, numbers_of_day):
+    keywords = Article.find_latest_top_keywords_of_nearest_day(limit, numbers_of_day)
+    return jsonify({"keywords": keywords})

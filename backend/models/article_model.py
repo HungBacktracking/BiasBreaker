@@ -279,3 +279,62 @@ class Article:
         for article in latest_articles:
             article["_id"] = str(article["_id"])
         return latest_articles
+
+    @staticmethod
+    def find_top_keywords_and_articles(startdate, enddate, limit):
+        publisher = "all"
+        category = "all"
+        date1 = datetime.strptime(startdate, "%d-%m-%Y")
+        date2 = datetime.strptime(enddate, "%d-%m-%Y")
+        data = []
+        while date1 <= date2:
+            formatted_date = date1.strftime("%d-%m-%Y")
+            dict_key = Article.count_keywords(formatted_date, formatted_date, publisher)
+            sorted_dict = dict(sorted(dict_key.items(), key=lambda item: item[1]))
+            i = 0
+            for key, val in reversed(sorted_dict.items()):
+                article = articles.find_one(
+                    {
+                        "datetime": date1,
+                        "keywords": {"$regex": key, "$options": "i"},
+                    }
+                )
+                article["_id"] = str(article["_id"])
+
+                data.append(
+                    {
+                        "datetime": date1,
+                        "keyword": [
+                            {
+                                "keyword": key,
+                                "article": article,
+                                "frequency": val,
+                            }
+                        ],
+                    }
+                )
+                i += 1
+                if i == limit:
+                    break
+            date1 += timedelta(days=1)
+        return data
+
+    @staticmethod
+    def find_latest_paper_by_keywords(keywords, limit):
+        latest_articles = list(
+            articles.find({"keywords": {"$regex": keywords, "$options": "i"}})
+            .sort("datetime", -1)
+            .limit(limit)
+        )
+        for article in latest_articles:
+            article["_id"] = str(article["_id"])
+        return latest_articles
+
+    @staticmethod
+    def find_latest_top_keywords_of_nearest_day(limit, numbers_of_day):
+        latest_day = list(articles.find().sort("datetime", -1).limit(limit))[0][
+            "datetime"
+        ]
+        format_time = latest_day.strftime("%d-%m-%Y")
+        old_date = (latest_day - timedelta(days=numbers_of_day)).strftime("%d-%m-%Y")
+        return Article.find_top_keywords_and_articles(old_date, format_time, limit)

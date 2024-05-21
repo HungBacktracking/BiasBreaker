@@ -20,6 +20,9 @@ from controllers.articles_controller import (
     get_by_keyword_list,
     count_keywords,
     get_latest_by_category_and_limit,
+    get_top_keywords_and_articles,
+    get_latest_paper_by_keywords,
+    get_latest_top_keywords_of_nearest_day,
 )
 
 article = Blueprint("article", __name__)
@@ -70,7 +73,7 @@ def get_all_article_by_publisher_category_route(publisher_name, category):
 @article.route("/articles/addarticle", methods=["POST"])
 def add_article_route():
     article_post = request.get_json()
-    return add_article(article)
+    return add_article(article_post)
 
 
 @article.route("/articles/deletearrticle/<id>", methods=["DELETE"])
@@ -130,6 +133,23 @@ def get_static_keywords(date1, date2, publisher):
     return count_keywords(date1, date2, publisher)
 
 
-@article.route("/aricles/latest/by-category/<category>/limit/<limit>", methods=["GET"])
+@article.route("/articles/latest/by-category/<category>/limit/<limit>", methods=["GET"])
 def get_latest_by_category_and_limit_route(category, limit):
     return get_latest_by_category_and_limit(category, int(limit))
+
+
+@article.route(
+    "/articles/from/<date1>/to/<date2>/statitic-keywords/limit-keywords/<limit>"
+)
+def get_top_keywords_and_articles_route(date1, date2, limit):
+    return get_top_keywords_and_articles(date1, date2, int(limit))
+
+
+@article.route("/articles/latest-by-keywords/<keywords>/limit/<limit>")
+def get_latest_paper_by_keywords_route(keywords, limit):
+    return get_latest_paper_by_keywords(keywords, int(limit))
+
+
+@article.route("/articles/keywords-paper/number-of-day/<num>/limit/<limit>")
+def get_latest_top_keywords_of_nearest_day_route(limit, num):
+    return get_latest_top_keywords_of_nearest_day(int(limit), int(num))
