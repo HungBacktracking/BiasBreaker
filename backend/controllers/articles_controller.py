@@ -1,7 +1,8 @@
 from flask import jsonify
 from models.article_model import Article
+from models.users_model import User
 from LLM_Models.model import Predictor, TextSummarizer
-from recommender.main import Recommender
+from recommender.main import Recommender, HybridRecommender
 
 
 def get_article(article_id):
@@ -27,16 +28,16 @@ def get_all_article_by_publisher(publisher):
     return jsonify({"articles": articles})
 
 def get_recommendation(request):
-    article_id = request.get("id")
-    article = Article.find_one(article_id)
+    user_email = request.get("email")
+    user = User.find_one(user_email)
 
-    if not article:
+    if not user:
         return jsonify({"error": "Article not found"}), 404
 
-    recommender = Recommender()
-    recommendations = recommender.get_recommendations_from_item(article_id)
+    recommender = HybridRecommender()
+    recommendations = recommender.get_recommendations_for_user(str(user["_id"]))
 
-    return jsonify({"recommendations": recommendations})
+    return jsonify({"articles": recommendations})
 
 
 def get_prediction(request):
@@ -126,6 +127,10 @@ def get_latest_article(category):
 
 def get_latest_and_related():
     articles = Article.find_top_latest_and_top_related(3)
+    return jsonify({"articles": articles})
+
+def get_latest_and_related_with_category(category):
+    articles = Article.find_top_latest_and_top_related_with_category(category)
     return jsonify({"articles": articles})
 
 

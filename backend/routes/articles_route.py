@@ -17,6 +17,7 @@ from controllers.articles_controller import (
     get_related_articles,
     get_latest_article,
     get_latest_and_related,
+    get_latest_and_related_with_category,
     get_by_keyword_list,
     count_keywords,
 )
@@ -101,6 +102,9 @@ def get_article_by_keywords_in_title_route(date1, date2, keywords, category, pub
 def get_latest_article_route(category):
     return get_latest_article(category)
 
+@article.route("/articles/latest/related/category/<category>", methods=["GET"])
+def get_latest_and_related_with_category_route(category):
+    return get_latest_and_related_with_category(category)
 
 @article.route("/articles/date-latest/latest-related/", methods=["GET"])
 def get_latest_and_relate():

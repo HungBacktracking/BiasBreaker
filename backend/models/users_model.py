@@ -51,4 +51,4 @@ class User:
         return user["password"] == password
 
     def to_dict(self):
-        return {"email": self.email, "password": self.password}
+        return {"email": self.email, "password": self.password, "favorite_categories": [], "viewed_articles": []}
