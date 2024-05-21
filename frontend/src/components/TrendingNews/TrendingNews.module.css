@@ -114,6 +114,8 @@
 .article_detail {
     display: flex;
     flex-direction: row;
+    line-height: 20px;
+    margin-top: 12px;
 }
 
 .article_title {

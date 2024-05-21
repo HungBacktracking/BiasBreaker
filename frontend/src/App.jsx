@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import CategoryPage from './pages/CategoryPage';
 import ForYouPage from './pages/ForYou';
 import TrendingPage from './pages/TrendingPage';
+import KeyWordPage from './pages/KeywordPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/for-you" element={<ForYouPage />} />
         <Route path="/trending" element={<TrendingPage />} />
+        <Route path="/keyword/:keyword" element={<KeyWordPage />} />
         <Route path='/category/:category' element={<CategoryPage />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
