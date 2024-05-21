@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Heading from '../MainNews/Heading/Heading';
 import Small from './SmallArticleItem';
 import SmallArticleItem from './SmallArticleItem';
+import axios from 'axios';
 
 const sampleData = [
     { 
@@ -37,20 +38,21 @@ const SmallArticleList = ({ isForYou }) => {
     const title = isForYou ? "Tin dành riêng cho bạn" : "Tin thế giới";
     const color = isForYou ? "purple" : "emerald";
 
-    useEffect(() => {
+    useEffect( () => {
         const fetchArticles = async () => {
             try {
-                // const response = await fetch(isForYou ? '/api/personalized-articles' : '/api/general-articles');
-                // const data = await response.json();
-                const data = sampleData;
-                setArticles(data);
-            } catch (error) {
-                console.error('Error fetching articles:', error);
+                const response = await axios.get('http://localhost:5000/articles/latest/category/thế giới',);
+                setArticles(response.data.articles);
+                console.log(response.data.articles);
+            } catch (err) {
+                
+            } finally {
+                
             }
-        };
+        }
 
         fetchArticles();
-    }, [isForYou]);
+    }, []);
 
 
     return (

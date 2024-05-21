@@ -1,6 +1,7 @@
 import classes from './TopArticleList.module.css';
 import { useState, useEffect } from 'react';
 import TopArticleItem from './TopArticleItem';
+import axios from 'axios';
 
 const sampleData = [
     { 
@@ -46,16 +47,28 @@ const sampleData = [
 
 const TopArticleList = () => {
     const [articles, setArticles] = useState([]);
+	const [error, setError] = useState(false);
 
-    useEffect(() => {
-        const filteredArticles = sampleData;
-        setArticles(filteredArticles);
-    }, [articles]);
+	const fetchArticles = async () => {
+        setError('');
+
+        try {
+            const response = await axios.get('http://localhost:5000/articles/date-latest/latest-related',);
+            setArticles(response.data.articles);
+        } catch (err) {
+            setError('Failed to fetch summary.');
+        } finally {
+        }
+    };
+
+    useEffect( () => {
+		fetchArticles();
+    }, []);
 
     return (
         <>
             {articles.map(article => (
-                <TopArticleItem article={article} />
+                <TopArticleItem key={article._id} article={article} />
             ))}
         </>
     );
