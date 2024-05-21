@@ -1,40 +1,12 @@
-from .utils import *
-from . import world
+from utils import *
+import world
 import os
 import requests
 import heapq
 
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import StuffDocumentsChain
-from langchain.chains.llm import LLMChain
-from langchain.text_splitter import TokenTextSplitter
-from langchain_community.document_loaders import WebBaseLoader
-from langchain.schema.document import Document
-# from langchain.globals import set_debug
-# set_debug(True)
 import google.generativeai as genai
 genai.configure(api_key=world.GOOGLE_API_KEY)
-
-import warnings
-from langchain_core._api.deprecation import LangChainDeprecationWarning
-warnings.filterwarnings("ignore", category=LangChainDeprecationWarning)
-
 os.environ["GOOGLE_API_KEY"] = world.GOOGLE_API_KEY
-
-
-class StringLoader(object):
-    def __init__(self, text):
-        self.text = text
-
-    def _get_text_chunks(self, text):
-        text_splitter = TokenTextSplitter(chunk_size=500, chunk_overlap=100)
-        docs = [Document(page_content=x) for x in text_splitter.split_text(text)]
-        return docs
-
-    def load(self):
-        return self._get_text_chunks(self.text)
-
 
 class TextSummarizer(object):
 
@@ -52,11 +24,11 @@ class TextSummarizer(object):
         """
         assert model_name in ["gemini-pro"], "Invalid model_name"
         # Initialize model
-        self.llm = ChatGoogleGenerativeAI(model=model_name)
+        self.llm = genai.GenerativeModel(model_name)
         # Define templates for summarization
         self.templates = {
             'easy': "Viết một bản tóm tắt ngắn gọn về nội dung sau đây: {text} TÓM TẮT NGẮN GỌN:",
-            'normal': "Viết một bản tóm tắt về nội dung sau đây: {text} TÓM TẮT:",
+            'normal': "Viết một bản tóm tắt độ dài trung bình về nội dung sau đây: {text} TÓM TẮT:",
             'detailed': "Viết một bản tóm tắt chi tiết về nội dung sau đây: {text} TÓM TẮT CHI TIẾT:"
         }
 
@@ -90,18 +62,9 @@ class TextSummarizer(object):
         """
         assert option in ["easy", "normal", "detailed"], "Invalid option"
         # Define the Summarize Chain
-        prompt = PromptTemplate.from_template(self.templates[option])
-        llm_chain = LLMChain(llm=self.llm, prompt=prompt)
-        stuff_chain = StuffDocumentsChain(
-            llm_chain=llm_chain, document_variable_name="text"
-        )
-
-        # Invoke Chain
-        loader = StringLoader(text)
-        docs = loader.load()
-        response = stuff_chain.invoke(docs)
-
-        return response["output_text"]
+        prompt = self.templates[option].format(text=text)
+        response = self.llm.generate_content(prompt)
+        return response.text
     
 
 class Predictor(object):
@@ -120,11 +83,11 @@ class Predictor(object):
             """
             assert model_name in ['gemini-pro'], "Invalid model_name"
             # Initialize model
-            self.llm = ChatGoogleGenerativeAI(model=model_name)
+            self.llm = genai.GenerativeModel(model_name)
             # Define template for prediction
-            self.template1 = "Với thông tin về công ty: {company_info} và bài báo: {news_article}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
-            self.company_info = WebBaseLoader(company_url).load()
-            self.template2 = "Với thông tin về công ty: {company_info} và các từ khóa: {keywords}, cùng với các tiêu đề bài báo liên quan: {titles}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
+            self.template1 = "Với thông tin về công ty trong trang web sau: {company_info} và bài báo: {news_article}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
+            self.company_info = company_url
+            self.template2 = "Với thông tin về công ty trong trang web sau: {company_info} và các từ khóa: {keywords}, cùng với các tiêu đề bài báo liên quan: {titles}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
         
         def predict_from_article(self, news_article):
             """_summary_
@@ -135,23 +98,9 @@ class Predictor(object):
             Returns:
                 _type_: _description_
             """
-            prompt_template = PromptTemplate(
-                template=self.template1,
-                input_variables=["company_info", "news_article"],
-            )
-            
-            chain = LLMChain(
-                llm=self.llm,
-                prompt=prompt_template
-            )
-            
-            loader = StringLoader(news_article)
-            docs = loader.load()
-            
-            prediction = chain.run(
-                company_info=self.company_info,
-                news_article=docs,
-            )
+            prompt = self.template1.format(company_info=self.company_info, news_article=news_article)
+            response = self.llm.generate_content(prompt)
+            prediction = response.text
             
             return prediction
         
@@ -165,27 +114,8 @@ class Predictor(object):
             Returns:
                 _type_: _description_
             """
-            prompt_template = PromptTemplate(
-                template=self.template2,
-                input_variables=["company_info", "keywords", "titles"],
-            )
-            
-            chain = LLMChain(
-                llm=self.llm,
-                prompt=prompt_template
-            )
-            
-            kw_loader = StringLoader(keywords)
-            kw_docs = kw_loader.load()
-            article_loader = StringLoader(titles)
-            article_docs = article_loader.load()
-            
-            prediction = chain.run(
-                company_info=self.company_info,
-                keywords=kw_docs,
-                titles=article_docs,
-            )
-            
+            prompt_template = self.template2.format(company_info=self.company_info, keywords=keywords, titles=titles)
+            prediction = self.llm.generate_content(prompt_template).text
             return prediction
         
 
@@ -244,3 +174,22 @@ class KeywordExtractor(object):
 # """
 # keyword_extractor = KeywordExtractor()
 # print(keyword_extractor.extract_keywords(text))
+
+# text = """Chuỗi sự kiện du lịch hè Bình Định được tổ chức xuyên suốt ba tháng với nhiều hoạt động như VnExpress Marathon, giải TeqBall quốc tế, lễ hội diều,...
+# Với chủ đề "Quy Nhơn - Thiên đường biển - Tỏa sáng và phát triển", chuỗi sự kiện thể thao - du lịch hè Bình Đình có hơn 10 hoạt động, diễn ra từ tháng 6 đến tháng 8. Các hoạt động chính bao gồm khai mạc du lịch hè (ngày 8/6); giải TeqBall quốc tế năm 2024 (6-9/6); giải chạy VnExpress Marathon Quy Nhơn 2024 (21-23/6).
+# Trong đó, Giải TeqBall, môn thể thao kết hợp bóng đá với bóng bàn, là sự kiện lần đầu tổ chức tại Việt Nam. Với sự tham gia của hơn 50 đội đến từ hơn 50 quốc gia, ban tổ chức dự kiến giải sẽ thu hút hàng nghìn du khách trong nước và quốc tế Quy Nhơn trong những ngày diễn ra. VnExpress Marathon Quy Nhơn mùa thứ 5 cũng là sự kiện thể thao quan trọng của tỉnh khi thu hút hàng chục nghìn lượt runner và người thân đến thành phố. Giải đưa VĐV qua các cung đường chạy nổi tiếng, như một tour du lịch kết hợp với thể thao.
+# Trong tháng 6, Bình Định cũng tổ chức hội nghị thúc đẩy đầu tư, phát triển thương mại, du lịch các tỉnh phía Nam với đối tác Ấn Độ; Liên hoan diều Quy Nhơn - Bình Định.
+# Ở các tháng còn lại, địa phương đăng cai nhiều sự kiện thể thao lớn như Giải vô địch Điền kinh các nhóm tuổi trẻ quốc gia năm 2024 (26/6-5/7); Giải Bóng đá bãi biển Vô địch quốc gia (11-21/7); Giải vô địch trẻ Kickboxing toàn quốc (22-31/7); Giải Bóng rổ trẻ các nhóm tuổi 3x3 toàn quốc (10-20/8); chương trình "Du lịch, Điện ảnh và Thể thao - Tự hào bản sắc Việt" (tháng 8). Ngoài ra, dự kiến tỉnh có thêm nhiều sự kiện bên lề, sự kiện du lịch cấp tỉnh khác.
+# Lãnh đạo địa phương cho biết chuỗi sự kiện nhằm mục đích kích cầu du lịch, thu hút du khách trong nước và quốc tế, các nhà đầu tư đến với Bình Định. Đồng thời, tỉnh muốn xây dựng thương hiệu "điểm đến an toàn, có nét đặc trưng riêng, văn minh, thân thiện và hấp dẫn". Trong dài hạn, tỉnh định hướng hình thành các chuỗi sự kiện du lịch, văn hóa - thể thao tổ chức thường niên.
+# Du lịch là một trong những ngành kinh tế mũi nhọn của Bình Định với nhiều sản phẩm về nghỉ dưỡng, vui chơi, thể thao biển, du lịch khoa học, MICE, di sản văn hóa. Địa phương này có bề dày văn hóa - lịch sử, được thiên nhiên ban tặng đường bờ biển dài hơn 130 km với nhiều vũng vịnh, bãi tắm đẹp và danh lam thắng cảnh như đảo Yến, đầm Thị Nại - bán đảo Phương Mai, đồi Ghềnh Ráng - Tiên Sa, hồ Núi Một,... Với 234 di tích lịch sử và hệ thống tháp Chăm, đình, chùa dày đặc, Bình Định có bệ phóng phát triển du lịch văn hóa và tâm linh.
+# Theo Sở Du lịch, 3 tháng đầu năm, lượng khách du lịch ước đạt 2,7 triệu lượt, tăng gấp 2,2 lần so với cùng kỳ năm 2023. Tỉnh đặt mục tiêu đón 6 triệu lượt khách trong năm 2024.
+# Hoài Phương."""
+# predictor = Predictor()
+# print(predictor.predict_from_article(text))
+
+# summarizer = TextSummarizer()
+# print(summarizer.summarize(text, "easy"))
+# print('----------------')
+# print(summarizer.summarize(text, "normal"))
+# print('----------------')
+# print(summarizer.summarize(text, "detailed"))

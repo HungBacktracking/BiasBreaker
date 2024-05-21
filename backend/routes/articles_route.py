@@ -107,7 +107,7 @@ def get_latest_article_route(category):
     return get_latest_article(category)
 
 
-@article.route("/articles/date-latest/latest-realated/", methods=["GET"])
+@article.route("/articles/date-latest/latest-related/", methods=["GET"])
 def get_latest_and_relate():
     return get_latest_and_related()
 
