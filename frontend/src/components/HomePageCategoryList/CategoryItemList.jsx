@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import classes from './HomePageCategoryList.module.css';
 import CategoryItem from './CategoryItem';
 import Heading from '../MainNews/Heading/Heading';
+import axios from 'axios';
 
 const sampleData = [
     { 
@@ -40,14 +41,13 @@ const CategoryItemList = ({ category }) => {
         if (category.length > 0) {
         setCategoryText(category.charAt(0).toUpperCase() + category.slice(1));
         }
-    }, [category]);
+    }, []);
 
     useEffect( () => {
       const fetchArticles = async () => {
           try {
               const response = await axios.get(`http://localhost:5000/articles/latest/category/${category}`,);
               setArticleList(response.data.articles);
-              console.log(category, response.data.articles);
           } catch (err) {
               
           } finally {
