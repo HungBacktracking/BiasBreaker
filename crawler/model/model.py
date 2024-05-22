@@ -8,6 +8,8 @@ import google.generativeai as genai
 genai.configure(api_key=world.GOOGLE_API_KEY)
 os.environ["GOOGLE_API_KEY"] = world.GOOGLE_API_KEY
 
+GRAB = """Grab là một siêu ứng dụng hàng đầu ở Đông Nam Á, cung cấp nhiều dịch vụ bao gồm đặt xe, giao đồ ăn (GrabFood), giao hàng tạp hóa (GrabMart), giao hàng nhanh (GrabExpress) và dịch vụ tài chính (ví điện tử Moca, bảo hiểm). Nền tảng này kết nối người tiêu dùng, tài xế và đối tác kinh doanh, nhằm cải thiện sự tiện lợi hàng ngày và cơ hội thu nhập. Grab cam kết an toàn, đổi mới và tác động xã hội, nỗ lực nâng cao chất lượng sống đô thị và tạo ra ảnh hưởng tích cực trong khu vực."""
+
 class TextSummarizer(object):
 
     def __init__(self, model_name="gemini-pro"):
@@ -69,7 +71,7 @@ class TextSummarizer(object):
 
 class Predictor(object):
         
-        def __init__(self, model_name='gemini-pro', company_url='https://www.grab.com/vn/en/'):
+        def __init__(self, model_name='gemini-pro', company_info=GRAB):
             """
             Initializes the Predictor class.
     
@@ -85,9 +87,9 @@ class Predictor(object):
             # Initialize model
             self.llm = genai.GenerativeModel(model_name)
             # Define template for prediction
-            self.template1 = "Với thông tin về công ty trong trang web sau: {company_info} và bài báo: {news_article}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
-            self.company_info = company_url
-            self.template2 = "Với thông tin về công ty trong trang web sau: {company_info} và các từ khóa: {keywords}, cùng với các tiêu đề bài báo liên quan: {titles}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
+            self.template1 = "Với thông tin về công ty như sau: {company_info} và bài báo: {news_article}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
+            self.company_info = company_info
+            self.template2 = "Với thông tin về công ty như sau: {company_info} và các từ khóa: {keywords}, cùng với các tiêu đề bài báo liên quan: {titles}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
         
         def predict_from_article(self, news_article):
             """_summary_
