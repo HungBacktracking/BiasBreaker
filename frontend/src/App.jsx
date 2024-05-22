@@ -13,7 +13,7 @@ import NewsDetail from './pages/NewsDetail';
 function App() {
   return (
     <Router>
-      {/* <Header /> */}
+      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/for-you" element={<ForYouPage />} />
