@@ -214,10 +214,12 @@ class Article:
             article["related"] = Article.find_top_related_articles(article["_id"])
             article["_id"] = str(article["_id"])
         return latest_articles
-    
+
     @staticmethod
     def find_top_latest_and_top_related_with_category(category, limit=20):
-        latest_articles = list(articles.find({"category": category}).sort("datetime", -1).limit(limit))
+        latest_articles = list(
+            articles.find({"category": category}).sort("datetime", -1).limit(limit)
+        )
         for article in latest_articles:
             article["related"] = Article.find_top_related_articles(article["_id"])
             article["_id"] = str(article["_id"])
@@ -323,10 +325,11 @@ class Article:
                         "frequency": val,
                     }
                 )
-                data.append(data_date)
+                # print(data_date)
                 i += 1
                 if i == limit + 1:
                     break
+            data.append(data_date)
             date1 += timedelta(days=1)
         return data
 
