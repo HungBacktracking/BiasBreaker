@@ -72,8 +72,21 @@ const ForYouNews = () => {
             }
         }
 
+		const fetchArticles = async () => {
+			try {
+				const response = await axios.get('http://localhost:5000/articles/latest/related/category/thế giới',);
+				setArticleList(response.data.articles);
+				console.log(response.data.articles);
+			} catch (err) {
+				
+			} finally {
+				setIsLoading(false);
+			}
+		}
+
 		const email = localStorage.getItem('email');
-        if (email) fetchRecommendations(email);
+        if (!email) fetchArticles();
+		else fetchRecommendations(email);
     }, []);
 
     

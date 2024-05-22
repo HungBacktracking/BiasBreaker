@@ -75,18 +75,16 @@ const KeywordNews = ({ keyword }) => {
             try {
                 const response = await axios.get(`http://localhost:5000/articles/latest-by-keywords/${keyword}/limit/20`,);
                 setArticleList(response.data.articles);
+                setTopArticles(response.data.articles.slice(0, 4));
+                setAllArticles(response.data.articles.slice(4, 20));
             } catch (err) {
-                
+                console.log(err);
             } finally {
                 setIsLoading(false);
             }
         }
         fetchArticles();
-        const top = articleList.slice(0, 4);
-        const allArticles = articleList.slice(4, articleList.length);
-        setTopArticles(top);
-        setAllArticles(allArticles);
-    }, [keyword]);
+    }, []);
 
     return (
         <div className={classes.full_height}>

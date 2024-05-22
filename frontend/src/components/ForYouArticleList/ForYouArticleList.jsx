@@ -68,18 +68,32 @@ const ForYouArticleList = () => {
                     email: email
                 
                 });
-                setArticleList(response.data.articles.slice(3, 9));
                 console.log("Recommendation");
                 console.log(response.data.articles);
+                setArticleList(response.data.articles.slice(3, 9));
             } catch (err) {
                 console.log(err);
             } finally {
                 setIsLoading(false);
             }
         }
+    
+        const fetchArticles = async () => {
+			try {
+				const response = await axios.get('http://localhost:5000/articles/latest/category/thế giới',);
+				setArticleList(response.data.articles.slice(6, 12));
+				console.log(response.data.articles);
+			} catch (err) {
+				
+			} finally {
+				
+			}
+		}
 
 		const email = localStorage.getItem('email');
-		if (email) fetchRecommendations(email);
+		if (!email) fetchArticles();
+		else fetchRecommendations(email);
+
 	}, []);
 
     return (

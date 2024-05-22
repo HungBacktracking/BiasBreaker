@@ -148,7 +148,7 @@ def get_related_articles(id):
 
 
 def get_latest_article(category):
-    articles = Article.find_top_latest_articles(category, 3)
+    articles = Article.find_top_latest_articles(category)
     return jsonify({"articles": articles})
 
 

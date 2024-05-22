@@ -201,7 +201,7 @@ class Article:
         return top_related_articles
 
     @staticmethod
-    def find_top_latest_articles(category, limit=3):
+    def find_top_latest_articles(category, limit=16):
         latest_articles = list(
             articles.find({"category": category}).sort("datetime", -1).limit(limit)
         )
@@ -218,7 +218,7 @@ class Article:
         return latest_articles
 
     @staticmethod
-    def find_top_latest_and_top_related_with_category(category, limit=20):
+    def find_top_latest_and_top_related_with_category(category, limit=16):
         latest_articles = list(
             articles.find({"category": category}).sort("datetime", -1).limit(limit)
         )
