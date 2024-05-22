@@ -83,7 +83,7 @@ const KeywordNews = ({ keyword }) => {
         }
         fetchArticles();
         const top = articleList.slice(0, 4);
-        const allArticles = articleList.slice(4, sampleData.length);
+        const allArticles = articleList.slice(4, articleList.length);
         setTopArticles(top);
         setAllArticles(allArticles);
     }, [keyword]);
