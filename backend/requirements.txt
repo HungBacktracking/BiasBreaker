@@ -23,3 +23,4 @@ flask-cors
 numpy
 pandas
 scikit-learn
+IPython
