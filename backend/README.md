@@ -43,7 +43,7 @@ This project aims to provide a platform for users to access the latest news arti
 
 1. Start the Flask server:
     ```
-    flask run
+    python app.py
     ```
 2. Open your web browser and navigate to `http://localhost:5000` to access the server.
 
