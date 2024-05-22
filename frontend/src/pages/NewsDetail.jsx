@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import sampleData from '../data/sample.json';
 
+const sampleKey = ['Key 1', 'Key 2', 'Key 3', 'Key 4', 'Key 5', 'Key 6', 'Key 7', 'Key 8'];
+
 function NewsDetail() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -50,17 +52,13 @@ function NewsDetail() {
           <div>
             <h3 className="text-lg font-medium mb-2">Keywords</h3>
             <div className="flex gap-2 flex-wrap">
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
-              <p className="border px-4 py-1 rounded-full border-green-500">Key 1</p>
+              {sampleKey.map((item) => {
+                return (
+                  <p key={item} className="border px-4 py-1 rounded-full border-green-500">
+                    {item}
+                  </p>
+                );
+              })}
             </div>
           </div>
         </div>
