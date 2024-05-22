@@ -7,7 +7,7 @@ const TrendingList = ({ trendingList }) => {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
-        setArticles(trendingList.keyword);
+        setArticles(trendingList.keywords);
     }, [trendingList]);
 
     return (
@@ -27,7 +27,7 @@ const TrendingList = ({ trendingList }) => {
                                     <div className={classes.source_time}>
                                         <div>{article.article.publisher}</div>
                                         <div>  •  </div>
-                                        <div>{article.time}</div>
+                                        <div>{article.datetime}</div>
                                     </div>
                                 </div>
                             </div>
