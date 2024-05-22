@@ -6,6 +6,7 @@ from controllers.articles_controller import (
     get_summary,
     get_prediction,
     get_recommendation,
+    get_recommendation_related,
     get_all_article_by_category,
     get_all_article_by_publisher,
     get_all_article_by_publisher_category,
@@ -63,6 +64,9 @@ def get_prediction_route():
 def get_recommendation_route():
     return get_recommendation(request.json)
 
+@article.route("/get_recommendation_related", methods=["POST"])
+def get_recommendation_related_route():
+    return get_recommendation_related(request.json)
 
 @article.route(
     "/articles/publisher/<publisher_name>/category/<category>", methods=["GET"]

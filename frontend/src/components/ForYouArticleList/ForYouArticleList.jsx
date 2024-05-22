@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import classes from './ForYouArticleList.module.css';
 import ForYouArticleItem from './ForYouArticleItem';
-
+import axios from 'axios';
 
 const sampleData = [
     { 
@@ -57,10 +57,35 @@ const sampleData = [
 
 
 const ForYouArticleList = () => {
+	const [isLoading, setIsLoading] = useState(true);
+	const [articleList, setArticleList] = useState([]);
+	
+	useEffect(() => {
+		setIsLoading(true);
+		const fetchRecommendations = async (email) => {
+            try {
+                const response = await axios.post('http://localhost:5000/get_recommendation', {
+                    email: email
+                
+                });
+                setArticleList(response.data.articles.slice(3, 9));
+                console.log("Recommendation");
+                console.log(response.data.articles);
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+		const email = localStorage.getItem('email');
+		if (email) fetchRecommendations(email);
+	}, []);
+
     return (
         <div className={classes.main_for_you}>
-            {sampleData.map(article => (
-                <ForYouArticleItem key={article.id} article={article} />
+            {articleList.map(article => (
+                <ForYouArticleItem key={article._id} article={article} />
             ))}
             <div className={classes.separate_mid}></div>
         </div>
