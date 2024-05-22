@@ -24,3 +24,4 @@ numpy
 pandas
 scikit-learn
 IPython
+google-generativeai
