@@ -3,8 +3,15 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import classes from './TrendingNews.module.css';
 
+
+
 const TrendingList = ({ trendingList }) => {
     const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(`${classes.none} ${classes.spinner_border}`);
+
+    const handlePrediction = async () => {
+        setLoading(`${classes.spinner_border}`);
+    }
 
     useEffect(() => {
         setArticles(trendingList.keywords);
@@ -15,6 +22,12 @@ const TrendingList = ({ trendingList }) => {
             <div className={classes.trending_container}>
                 <div className={classes.trending_time}>{trendingList.datetime}</div>
                 <div className={classes.trending_list}>
+                    <div className={classes.button_wrapper}>
+                        <div onClick={handlePrediction} className={classes.buttonLoading}>
+                            <div className={loading}></div>
+                            Khám phá
+                        </div>
+                    </div>
                     {articles.map((article, index) => (
                         <Link to={`/keyword/${article.keyword}`} className={classes.trending_item} key={index}>
                             <div className={classes.trending_index}>{index + 1}</div>
