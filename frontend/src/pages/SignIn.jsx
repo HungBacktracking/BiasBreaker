@@ -44,7 +44,7 @@ export default function SingIn() {
         setError(true);
         return;
       }
-
+      localStorage.setItem('email', data.email);
       login(data.access_token);
       navigate('/');
     } catch (error) {

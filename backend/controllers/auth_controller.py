@@ -20,7 +20,7 @@ def login_controller(request):
 
     if User.validate(email, password):
         access_token = create_access_token(identity = email)
-        return jsonify(access_token=access_token), 200
+        return jsonify({"access_token": access_token, "email": email}), 200
     else:
         return jsonify({"message": "Wrong username or password"}), 401
     

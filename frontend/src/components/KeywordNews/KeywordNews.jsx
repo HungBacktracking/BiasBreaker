@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import classes from './KeywordNews.module.css';
 import KeywordItem from './KeywordItem';
+import axios from 'axios';
 
 const sampleData = [
     { 
@@ -55,6 +56,7 @@ const sampleData = [
   ];
 
 const KeywordNews = ({ keyword }) => {
+    const [articleList, setArticleList] = useState([]);
     const [topArticles, setTopArticles] = useState([]);
     const [allArticles, setAllArticles] = useState([]);
     const [keywordText, setKeywordText] = useState('');
@@ -66,8 +68,19 @@ const KeywordNews = ({ keyword }) => {
     }, [keyword]);
 
     useEffect(() => {
-        const top = sampleData.slice(0, 4);
-        const allArticles = sampleData.slice(4, sampleData.length);
+        const fetchArticles = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/articles/latest-by-keywords/${keyword}/limit/20`,);
+                setArticleList(response.data.articles);
+            } catch (err) {
+                
+            } finally {
+                
+            }
+        }
+        fetchArticles();
+        const top = articleList.slice(0, 4);
+        const allArticles = articleList.slice(4, sampleData.length);
         setTopArticles(top);
         setAllArticles(allArticles);
     }, [keyword]);

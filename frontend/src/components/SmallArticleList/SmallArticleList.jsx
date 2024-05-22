@@ -4,6 +4,7 @@ import Small from './SmallArticleItem';
 import SmallArticleItem from './SmallArticleItem';
 import axios from 'axios';
 
+
 const sampleData = [
     { 
       id: 1, 
@@ -37,6 +38,8 @@ const SmallArticleList = ({ isForYou }) => {
     const [articles, setArticles] = useState([]);
     const title = isForYou ? "Tin dành riêng cho bạn" : "Tin thế giới";
     const color = isForYou ? "purple" : "emerald";
+    const [userEmail, setUserEmail] = useState(null);
+
 
     useEffect( () => {
         const fetchArticles = async () => {
@@ -51,7 +54,25 @@ const SmallArticleList = ({ isForYou }) => {
             }
         }
 
-        fetchArticles();
+        const fetchRecommendations = async (email) => {
+            try {
+                const response = await axios.post('http://localhost:5000/get_recommendation', {
+                    email: email
+                
+                });
+                setArticles(response.data.articles);
+                console.log(response.data.articles);
+            } catch (err) {
+                
+            } finally {
+                
+            }
+        }
+
+        const email = localStorage.getItem('email');
+
+        if (!email || !isForYou) fetchArticles();
+        else fetchRecommendations(email);
     }, []);
 
 
