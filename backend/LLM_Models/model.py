@@ -5,8 +5,10 @@ import requests
 import heapq
 
 import google.generativeai as genai
+
 genai.configure(api_key=world.GOOGLE_API_KEY)
 os.environ["GOOGLE_API_KEY"] = world.GOOGLE_API_KEY
+
 
 class TextSummarizer(object):
 
@@ -27,9 +29,9 @@ class TextSummarizer(object):
         self.llm = genai.GenerativeModel(model_name)
         # Define templates for summarization
         self.templates = {
-            'easy': "Viết một bản tóm tắt ngắn gọn về nội dung sau đây: {text} TÓM TẮT NGẮN GỌN:",
-            'normal': "Viết một bản tóm tắt độ dài trung bình về nội dung sau đây: {text} TÓM TẮT:",
-            'detailed': "Viết một bản tóm tắt chi tiết về nội dung sau đây: {text} TÓM TẮT CHI TIẾT:"
+            "easy": "Viết một bản tóm tắt ngắn gọn về nội dung sau đây: {text} TÓM TẮT NGẮN GỌN:",
+            "normal": "Viết một bản tóm tắt độ dài trung bình về nội dung sau đây: {text} TÓM TẮT:",
+            "detailed": "Viết một bản tóm tắt chi tiết về nội dung sau đây: {text} TÓM TẮT CHI TIẾT:",
         }
 
     def get_result(self, text_file):
@@ -65,59 +67,65 @@ class TextSummarizer(object):
         prompt = self.templates[option].format(text=text)
         response = self.llm.generate_content(prompt)
         return response.text
-    
+
 
 class Predictor(object):
-        
-        def __init__(self, model_name='gemini-pro', company_url='https://www.grab.com/vn/en/'):
-            """
-            Initializes the Predictor class.
-    
-            Args:
-                model_name (str, optional): The name of the model to use for prediction. 
-                                            Default is 'gemini-pro'.
-                company_url (str, optional): The URL of the company website.
-    
-            Raises:
-                AssertionError: If the model_name is not one of the available models.
-            """
-            assert model_name in ['gemini-pro'], "Invalid model_name"
-            # Initialize model
-            self.llm = genai.GenerativeModel(model_name)
-            # Define template for prediction
-            self.template1 = "Với thông tin về công ty trong trang web sau: {company_info} và bài báo: {news_article}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
-            self.company_info = company_url
-            self.template2 = "Với thông tin về công ty trong trang web sau: {company_info} và các từ khóa: {keywords}, cùng với các tiêu đề bài báo liên quan: {titles}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
-        
-        def predict_from_article(self, news_article):
-            """_summary_
 
-            Args:
-                news_article (_type_): _description_
+    def __init__(
+        self, model_name="gemini-pro", company_url="https://www.grab.com/vn/en/"
+    ):
+        """
+        Initializes the Predictor class.
 
-            Returns:
-                _type_: _description_
-            """
-            prompt = self.template1.format(company_info=self.company_info, news_article=news_article)
-            response = self.llm.generate_content(prompt)
-            prediction = response.text
-            
-            return prediction
-        
-        def predict_from_keywords(self, keywords, titles):
-            """_summary_
+        Args:
+            model_name (str, optional): The name of the model to use for prediction.
+                                        Default is 'gemini-pro'.
+            company_url (str, optional): The URL of the company website.
 
-            Args:
-                keywords (_type_): _description_
-                titles (_type_): _description_
+        Raises:
+            AssertionError: If the model_name is not one of the available models.
+        """
+        assert model_name in ["gemini-pro"], "Invalid model_name"
+        # Initialize model
+        self.llm = genai.GenerativeModel(model_name)
+        # Define template for prediction
+        self.template1 = "Với thông tin về công ty trong trang web sau: {company_info} và bài báo: {news_article}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
+        self.company_info = company_url
+        self.template2 = "Với thông tin về công ty trong trang web sau: {company_info} và các từ khóa: {keywords}, cùng với các tiêu đề bài báo liên quan: {titles}, dự đoán các tác động có thể xảy ra nếu chúng liên quan đến một hoặc một số lĩnh vực sau của công ty: Giao hàng, Di chuyển hoặc Dịch vụ Tài chính. DỰ ĐOÁN:"
 
-            Returns:
-                _type_: _description_
-            """
-            prompt_template = self.template2.format(company_info=self.company_info, keywords=keywords, titles=titles)
-            prediction = self.llm.generate_content(prompt_template).text
-            return prediction
-        
+    def predict_from_article(self, news_article):
+        """_summary_
+
+        Args:
+            news_article (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        prompt = self.template1.format(
+            company_info=self.company_info, news_article=news_article
+        )
+        response = self.llm.generate_content(prompt)
+        prediction = response.text
+
+        return prediction
+
+    def predict_from_keywords(self, keywords, titles):
+        """_summary_
+
+        Args:
+            keywords (_type_): _description_
+            titles (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        prompt_template = self.template2.format(
+            company_info=self.company_info, keywords=keywords, titles=titles
+        )
+        prediction = self.llm.generate_content(prompt_template).text
+        return prediction
+
 
 class KeywordExtractor(object):
     def __init__(self, count=5):
@@ -130,7 +138,7 @@ class KeywordExtractor(object):
         self.count = count
         self.llm = genai.GenerativeModel("gemini-pro")
         self.prompt_template = "Tìm {count} từ khóa thời sự quan trọng trong đoạn tin tức sau: {text} TỪ KHÓA: 1. <keyword> 2. <keyword> 3. <keyword> ..."
-    
+
     def extract_keywords(self, text):
         """
         Extracts keywords from the given text.
@@ -144,9 +152,9 @@ class KeywordExtractor(object):
         prompt = self.prompt_template.format(count=self.count, text=text)
         response = self.llm.generate_content(prompt)
         response = response.text.split("\n")
-        response = [line.split('. ')[1] for line in response if line]
+        response = [line.split(". ")[1] for line in response if line]
         return response
-        
+
 
 # text = """
 # Hãng chip tỷ USD của Mỹ tăng tốc mở rộng ở Việt Nam
