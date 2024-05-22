@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classes from './Header.module.css';
 import './Header.module.css';
 import Navbar from './Navbar/Navbar';
@@ -8,6 +8,10 @@ import Button from '../Button/Button';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 
 function Header() {
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate('/sign-up');
+  }
   return (
     <>
       <header className={classes.header}>
@@ -31,11 +35,9 @@ function Header() {
             <Link href="/about">
               <Button variant="stroke">About us</Button>
             </Link>
-            <Link href="/sign-up">
-              <Button>
-                Sign up now <IoIosArrowRoundForward className="text-lg font-semibold" />
-              </Button>
-            </Link>
+            <Button onClick={handleClick}>
+              Sign up now <IoIosArrowRoundForward className="text-lg font-semibold" />
+            </Button>
           </div>
         </div>
         <Navbar />
