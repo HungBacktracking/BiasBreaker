@@ -53,7 +53,7 @@ const TopArticleList = () => {
         setError('');
 
         try {
-            const response = await axios.get('https://biasbreaker.onrender.com/articles/date-latest/latest-related',);
+            const response = await axios.get(`https://biasbreaker.onrender.com/articles/date-latest/latest-related`);
             setArticles(response.data.articles);
         } catch (err) {
             setError('Failed to fetch summary.');
