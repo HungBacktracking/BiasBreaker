@@ -127,6 +127,6 @@ class HybridRecommender(Recommender):
         return recommendations        
         
 # Test the recommender
-test_article_id = ObjectId('664b5e8dafb7d3388d076445')
+test_user_id = ObjectId('664d247e39c631453df10962')
 rec = Recommender()
-print(rec.get_recommendations_from_item(test_article_id))
+print(rec.get_recommendations_for_user(test_user_id))
