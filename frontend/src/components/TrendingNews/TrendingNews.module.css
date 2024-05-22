@@ -210,3 +210,8 @@
     }
 }
   
+.prediction {
+    padding: 30px;
+    font-size: 16px;
+    color: #1f1f1f;
+}

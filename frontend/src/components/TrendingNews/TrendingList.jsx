@@ -2,20 +2,46 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import classes from './TrendingNews.module.css';
-
+import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 
 
 const TrendingList = ({ trendingList }) => {
     const [articles, setArticles] = useState([]);
+    const [predictionText, setPredictionText] = useState("");
     const [loading, setLoading] = useState(`${classes.none} ${classes.spinner_border}`);
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    }
+
+    const fetchArticles = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/articles/predict-top-keywords-title/date/${formatDate(trendingList.datetime)}`,);
+            setPredictionText(response.data.Predictions);
+            // console.log(response.data.Predictions);
+        } catch (err) {
+            console.log(err);
+        } finally {
+
+        }
+    };
 
     const handlePrediction = async () => {
         setLoading(`${classes.spinner_border}`);
+        await fetchArticles();
+        setLoading(`${classes.none} ${classes.spinner_border}`);
+        console.log(predictionText);
     }
 
     useEffect(() => {
         setArticles(trendingList.keywords);
     }, [trendingList]);
+
 
     return (
         <>
@@ -23,10 +49,14 @@ const TrendingList = ({ trendingList }) => {
                 <div className={classes.trending_time}>{trendingList.datetime}</div>
                 <div className={classes.trending_list}>
                     <div className={classes.button_wrapper}>
-                        <div onClick={handlePrediction} className={classes.buttonLoading}>
-                            <div className={loading}></div>
-                            Khám phá
-                        </div>
+                        {
+                            predictionText === "" ? (
+                                <div onClick={handlePrediction} className={classes.buttonLoading}>
+                                    <div className={loading}></div>
+                                    Khám phá
+                                </div>
+                            ) : (<ReactMarkdown className={classes.prediction}>{predictionText}</ReactMarkdown>)
+                        }
                     </div>
                     {articles.map((article, index) => (
                         <Link to={`/keyword/${article.keyword}`} className={classes.trending_item} key={index}>
