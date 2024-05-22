@@ -80,7 +80,7 @@ const ForYouArticleList = () => {
     
         const fetchArticles = async () => {
 			try {
-				const response = await axios.get('http://localhost:5000/articles/latest/category/thế giới',);
+				const response = await axios.get('https://biasbreaker.onrender.com/articles/latest/category/thế giới',);
 				setArticleList(response.data.articles.slice(6, 12));
 				console.log(response.data.articles);
 			} catch (err) {

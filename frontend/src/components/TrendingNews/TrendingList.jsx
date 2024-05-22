@@ -21,7 +21,7 @@ const TrendingList = ({ trendingList }) => {
 
     const fetchArticles = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/articles/predict-top-keywords-title/date/${formatDate(trendingList.datetime)}`,);
+            const response = await axios.get(`https://biasbreaker.onrender.com/articles/predict-top-keywords-title/date/${formatDate(trendingList.datetime)}`,);
             setPredictionText(response.data.Predictions);
             // console.log(response.data.Predictions);
         } catch (err) {

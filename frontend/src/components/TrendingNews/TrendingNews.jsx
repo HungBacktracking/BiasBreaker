@@ -262,7 +262,7 @@ const TrendingNews = () => {
     const fetchArticles = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('http://localhost:5000/articles/keywords-paper/number-of-day/3/limit/10',);
+            const response = await axios.get('https://biasbreaker.onrender.com/articles/keywords-paper/number-of-day/3/limit/10',);
             setArticles(response.data.keywords);
         } catch (err) {
             

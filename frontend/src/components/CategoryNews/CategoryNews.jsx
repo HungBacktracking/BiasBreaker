@@ -22,7 +22,7 @@ const CategoryNews = ({ category, description }) => {
 		setIsLoading(true);
 		const fetchArticles = async () => {
 			try {
-				const response = await axios.get(`http://localhost:5000/articles/latest/related/category/${category}`,);
+				const response = await axios.get(`https://biasbreaker.onrender.com/articles/latest/related/category/${category}`,);
 				setArticleList(response.data.articles);
 				console.log(response.data.articles);
 			} catch (err) {

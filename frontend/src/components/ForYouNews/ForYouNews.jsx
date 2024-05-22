@@ -58,7 +58,7 @@ const ForYouNews = () => {
 		setIsLoading(true);
 		const fetchRecommendations = async (email) => {
             try {
-                const response = await axios.post('http://localhost:5000/get_recommendation_related', {
+                const response = await axios.post('https://biasbreaker.onrender.com/get_recommendation_related', {
                     email: email
                 
                 });
@@ -74,7 +74,7 @@ const ForYouNews = () => {
 
 		const fetchArticles = async () => {
 			try {
-				const response = await axios.get('http://localhost:5000/articles/latest/related/category/thế giới',);
+				const response = await axios.get('https://biasbreaker.onrender.com/articles/latest/related/category/thế giới',);
 				setArticleList(response.data.articles);
 				console.log(response.data.articles);
 			} catch (err) {

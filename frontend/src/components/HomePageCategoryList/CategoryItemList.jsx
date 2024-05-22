@@ -46,7 +46,7 @@ const CategoryItemList = ({ category }) => {
     useEffect( () => {
       const fetchArticles = async () => {
           try {
-              const response = await axios.get(`http://localhost:5000/articles/latest/category/${category}`,);
+              const response = await axios.get(`https://biasbreaker.onrender.com/articles/latest/category/${category}`,);
               setArticleList(response.data.articles.slice(0, 3));
           } catch (err) {
               

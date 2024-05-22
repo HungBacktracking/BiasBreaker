@@ -44,7 +44,7 @@ const SmallArticleList = ({ isForYou }) => {
     useEffect( () => {
         const fetchArticles = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/articles/latest/category/thế giới',);
+                const response = await axios.get('https://biasbreaker.onrender.com/articles/latest/category/thế giới',);
                 setArticles(response.data.articles.slice(0, 3));
                 console.log(response.data.articles);
             } catch (err) {
@@ -56,7 +56,7 @@ const SmallArticleList = ({ isForYou }) => {
 
         const fetchArticles2 = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/articles/latest/category/thế giới',);
+                const response = await axios.get('https://biasbreaker.onrender.com/articles/latest/category/thế giới',);
                 setArticles(response.data.articles.slice(3, 6));
                 console.log(response.data.articles);
             } catch (err) {
@@ -68,7 +68,7 @@ const SmallArticleList = ({ isForYou }) => {
 
         const fetchRecommendations = async (email) => {
             try {
-                const response = await axios.post('http://localhost:5000/get_recommendation', {
+                const response = await axios.post('https://biasbreaker.onrender.com/get_recommendation', {
                     email: email
                 
                 });

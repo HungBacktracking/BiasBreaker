@@ -73,7 +73,7 @@ const KeywordNews = ({ keyword }) => {
         setIsLoading(true);
         const fetchArticles = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/articles/latest-by-keywords/${keyword}/limit/20`,);
+                const response = await axios.get(`https://biasbreaker.onrender.com/articles/latest-by-keywords/${keyword}/limit/20`,);
                 setArticleList(response.data.articles);
                 setTopArticles(response.data.articles.slice(0, 4));
                 setAllArticles(response.data.articles.slice(4, 20));
