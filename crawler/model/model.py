@@ -8,7 +8,7 @@ import google.generativeai as genai
 genai.configure(api_key=world.GOOGLE_API_KEY)
 os.environ["GOOGLE_API_KEY"] = world.GOOGLE_API_KEY
 
-GRAB = """Grab là một siêu ứng dụng hàng đầu ở Đông Nam Á, cung cấp nhiều dịch vụ bao gồm đặt xe, giao đồ ăn (GrabFood), giao hàng tạp hóa (GrabMart), giao hàng nhanh (GrabExpress) và dịch vụ tài chính (ví điện tử Moca, bảo hiểm). Nền tảng này kết nối người tiêu dùng, tài xế và đối tác kinh doanh, nhằm cải thiện sự tiện lợi hàng ngày và cơ hội thu nhập. Grab cam kết an toàn, đổi mới và tác động xã hội, nỗ lực nâng cao chất lượng sống đô thị và tạo ra ảnh hưởng tích cực trong khu vực."""
+GRAB = """Grab là một siêu ứng dụng hàng đầu ở Đông Nam Á, cung cấp nhiều dịch vụ bao gồm đặt xe, giao đồ ăn (GrabFood), giao hàng tạp hóa (GrabMart), giao hàng nhanh (GrabExpress) và dịch vụ tài chính (ví điện tử Moca, bảo hiểm). Nền tảng này kết nối người tiêu dùng, tài xế và đối tác kinh doanh, nhằm cải thiện sự tiện lợi hàng ngày và cơ hội thu nhập. Grab cam kết an toàn, đổi mới và tác động xã hội, nỗ lực nâng cao chất lượng sống đô thị và tạo ra ảnh hưởng tích cực trong khu vực. Grab hoạt động tại nhiều thị trường lớn trong khu vực Đông Nam Á như Việt Nam, Indonesia, Malaysia, Philippines, Singapore và Thái Lan, cung cấp các giải pháp di chuyển và dịch vụ tiện ích phù hợp với nhu cầu địa phương và đóng góp vào sự phát triển kinh tế xã hội tại các quốc gia này."""
 
 class TextSummarizer(object):
 
