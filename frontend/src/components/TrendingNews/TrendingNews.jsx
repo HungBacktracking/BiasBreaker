@@ -1,6 +1,9 @@
 import React from 'react';
 import classes from './TrendingNews.module.css';
 import TrendingList from './TrendingList';
+import Loading from '../Loading/Loading';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const sampleData = [
     {
@@ -253,11 +256,31 @@ const sampleData = [
 ];
 
 const TrendingNews = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [articles, setArticles] = useState([]);
+
+    const fetchArticles = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.get('http://localhost:5000/articles/keywords-paper/number-of-day/3/limit/10',);
+            setArticles(response.data.keywords);
+        } catch (err) {
+            
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect( () => {
+		fetchArticles();
+    }, []);
+
     return (
         <div className={classes.full_height}>
+            <Loading isLoading={isLoading} />
             <main className={classes.main_container}>
                 <div className={classes.trending_main}>
-                    { sampleData.map((data, index) => (
+                    { articles.map((data, index) => (
                         <TrendingList key={index} trendingList={data} />
                     ))}
                 </div>

@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import classes from './CategoryNews.module.css';
 import Title from '../MainNews/Title/Title';
 import CategoryNewsItem from './CategoryNewsItem';
+import Loading from '../Loading/Loading';
 import axios from 'axios';
 
 
 const CategoryNews = ({ category, description }) => {
+	const [isLoading, setIsLoading] = useState(true);
     const [articleList, setArticleList] = useState([]);
     const [categoryText, setCategoryText] = useState('');
 
@@ -17,6 +19,7 @@ const CategoryNews = ({ category, description }) => {
     }, [category]);
 
     useEffect(() => {
+		setIsLoading(true);
 		const fetchArticles = async () => {
 			try {
 				const response = await axios.get(`http://localhost:5000/articles/latest/related/category/${category}`,);
@@ -25,7 +28,7 @@ const CategoryNews = ({ category, description }) => {
 			} catch (err) {
 				console.log(err);
 			} finally {
-				
+				setIsLoading(false);
 			}
 		}
 
@@ -34,14 +37,17 @@ const CategoryNews = ({ category, description }) => {
 
     return (
       <div className={classes.full_height}>
+		<Loading isLoading={isLoading} />
         <main className={classes.main_container}>
           <div className={classes.news}>
             <Title	name={categoryText} description={description}/>
-              <div className={classes.news_list}>
-                  {articleList.map(article => (
-                      <CategoryNewsItem key={article._id} article={article} />
-                  ))}
-              </div>
+				{isLoading ? <></> : (
+					<div className={classes.news_list}>
+						{articleList.map(article => (
+							<CategoryNewsItem key={article._id} article={article} />
+						))}
+					</div>
+				)}
           </div>
         </main>
       </div>

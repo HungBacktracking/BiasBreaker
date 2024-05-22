@@ -7,13 +7,13 @@ const TrendingList = ({ trendingList }) => {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
-        setArticles(trendingList.articles);
+        setArticles(trendingList.keyword);
     }, [trendingList]);
 
     return (
         <>
             <div className={classes.trending_container}>
-                <div className={classes.trending_time}>{trendingList.time}</div>
+                <div className={classes.trending_time}>{trendingList.datetime}</div>
                 <div className={classes.trending_list}>
                     {articles.map((article, index) => (
                         <Link to={`/keyword/${article.keyword}`} className={classes.trending_item} key={index}>
@@ -22,10 +22,10 @@ const TrendingList = ({ trendingList }) => {
                                 <div className={classes.trending_keyword}>{article.keyword}</div>
                                 <div className={classes.article_detail}>
                                     <div className={classes.article_title}>
-                                        {article.title}
+                                        {article.article.title}
                                     </div>
                                     <div className={classes.source_time}>
-                                        <div>{article.publisher}</div>
+                                        <div>{article.article.publisher}</div>
                                         <div>  •  </div>
                                         <div>{article.time}</div>
                                     </div>
@@ -35,7 +35,7 @@ const TrendingList = ({ trendingList }) => {
                                 <div className={classes.frequency_top}>{article.frequency}</div>
                                 <div className={classes.frequency_bottom}>lượt quan tâm</div>
                             </div>
-                            <img className={classes.trending_img} src={article.imagePath} alt="Ảnh bài báo" />
+                            <img className={classes.trending_img} src={article.article.image.url_link} alt="Ảnh bài báo" />
                         </Link>
                     ))}
                 </div>
