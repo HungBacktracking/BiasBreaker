@@ -297,11 +297,11 @@ class Article:
         date1 = datetime.strptime(startdate, "%d-%m-%Y")
         date2 = datetime.strptime(enddate, "%d-%m-%Y")
         data = []
-        while date1 <= date2:
+        while date2 >= date1:
             data_date = {}
-            data_date["datetime"] = date1
+            data_date["datetime"] = date2
             data_date["keywords"] = []
-            formatted_date = date1.strftime("%d-%m-%Y")
+            formatted_date = date2.strftime("%d-%m-%Y")
             dict_key = Article.count_keywords(formatted_date, formatted_date, publisher)
             sorted_dict = dict(sorted(dict_key.items(), key=lambda item: item[1]))
             i = 0
@@ -312,7 +312,7 @@ class Article:
 
                 article = articles.find_one(
                     {
-                        "datetime": date1,
+                        "datetime": date2,
                         "keywords": {"$regex": key, "$options": "i"},
                     }
                 )
@@ -330,7 +330,7 @@ class Article:
                 if i == limit + 1:
                     break
             data.append(data_date)
-            date1 += timedelta(days=1)
+            date2 -= timedelta(days=1)
         return data
 
     @staticmethod
