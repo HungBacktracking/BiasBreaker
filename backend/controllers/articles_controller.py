@@ -9,7 +9,7 @@ from recommender.main import Recommender, HybridRecommender
 def get_article(article_id):
     article = Article.find_one(article_id)
     if article:
-        return jsonify(article)
+        return jsonify({"articles": article})
     else:
         return jsonify({"error": "Article not found"}), 404
 
