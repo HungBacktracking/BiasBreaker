@@ -296,11 +296,18 @@ class Article:
         date2 = datetime.strptime(enddate, "%d-%m-%Y")
         data = []
         while date1 <= date2:
+            data_date = {}
+            data_date["datetime"] = date1
+            data_date["keywords"] = []
             formatted_date = date1.strftime("%d-%m-%Y")
             dict_key = Article.count_keywords(formatted_date, formatted_date, publisher)
             sorted_dict = dict(sorted(dict_key.items(), key=lambda item: item[1]))
             i = 0
             for key, val in reversed(sorted_dict.items()):
+                if i == 0:
+                    i += 1
+                    continue
+
                 article = articles.find_one(
                     {
                         "datetime": date1,
@@ -309,20 +316,16 @@ class Article:
                 )
                 article["_id"] = str(article["_id"])
 
-                data.append(
+                data_date["keywords"].append(
                     {
-                        "datetime": date1,
-                        "keyword": [
-                            {
-                                "keyword": key,
-                                "article": article,
-                                "frequency": val,
-                            }
-                        ],
+                        "keyword": key,
+                        "article": article,
+                        "frequency": val,
                     }
                 )
+                data.append(data_date)
                 i += 1
-                if i == limit:
+                if i == limit + 1:
                     break
             date1 += timedelta(days=1)
         return data
