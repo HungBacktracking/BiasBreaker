@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import classes from './KeywordNews.module.css';
 import KeywordItem from './KeywordItem';
+import Loading from '../Loading/Loading';
 import axios from 'axios';
 
 const sampleData = [
@@ -56,6 +57,7 @@ const sampleData = [
   ];
 
 const KeywordNews = ({ keyword }) => {
+    const [isLoading, setIsLoading] = useState(true);
     const [articleList, setArticleList] = useState([]);
     const [topArticles, setTopArticles] = useState([]);
     const [allArticles, setAllArticles] = useState([]);
@@ -68,6 +70,7 @@ const KeywordNews = ({ keyword }) => {
     }, [keyword]);
 
     useEffect(() => {
+        setIsLoading(true);
         const fetchArticles = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/articles/latest-by-keywords/${keyword}/limit/20`,);
@@ -75,7 +78,7 @@ const KeywordNews = ({ keyword }) => {
             } catch (err) {
                 
             } finally {
-                
+                setIsLoading(false);
             }
         }
         fetchArticles();
@@ -87,6 +90,7 @@ const KeywordNews = ({ keyword }) => {
 
     return (
         <div className={classes.full_height}>
+            <Loading isLoading={isLoading} />
             <main className={classes.main_container}>
                 <div className={classes.context}>
                     <div className={classes.context_container}>
@@ -95,20 +99,24 @@ const KeywordNews = ({ keyword }) => {
                     </div>
                 </div>
                 <h1 className={classes.keyword_description}>Tin tức về {keyword}</h1>
-                <div className={classes.keyword_container}>
-                    <h2 className={classes.keyword_title}>Tin tức hàng đầu</h2>
-                    <div className={classes.keyword_list}>
-                        { topArticles.map((data, index) => (
-                            <KeywordItem article={data} key={index} />
-                        ))}
+                {
+                    isLoading ? <></> : (
+                        <div className={classes.keyword_container}>
+                        <h2 className={classes.keyword_title}>Tin tức hàng đầu</h2>
+                        <div className={classes.keyword_list}>
+                            { topArticles.map((data, index) => (
+                                <KeywordItem article={data} key={index} />
+                            ))}
+                        </div>
+                        <h2 className={classes.keyword_title}>Tất cả bài viết</h2>
+                        <div className={classes.keyword_list}>
+                            { allArticles.map((data, index) => (
+                                <KeywordItem article={data} key={index} />
+                            ))}
+                        </div>
                     </div>
-                    <h2 className={classes.keyword_title}>Tất cả bài viết</h2>
-                    <div className={classes.keyword_list}>
-                        { allArticles.map((data, index) => (
-                            <KeywordItem article={data} key={index} />
-                        ))}
-                    </div>
-                </div>
+                    )
+                }
             </main>
         </div>
     );
