@@ -26,8 +26,8 @@ const TrendingList = ({ trendingList }) => {
                                     </div>
                                     <div className={classes.source_time}>
                                         <div>{article.article.publisher}</div>
-                                        <div>  •  </div>
-                                        <div>{article.datetime}</div>
+                                        {/* <div>  •  </div>
+                                        <div>{formatDate(article.article.datetime)}</div> */}
                                     </div>
                                 </div>
                             </div>

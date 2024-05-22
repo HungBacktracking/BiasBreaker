@@ -8,6 +8,7 @@ import CategoryPage from './pages/CategoryPage';
 import ForYouPage from './pages/ForYou';
 import TrendingPage from './pages/TrendingPage';
 import KeyWordPage from './pages/KeywordPage';
+import NewsDetail from './pages/NewsDetail';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/category/:category' element={<CategoryPage />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/article/:id" element={<NewsDetail />} />
       </Routes>
     </Router>
   );
