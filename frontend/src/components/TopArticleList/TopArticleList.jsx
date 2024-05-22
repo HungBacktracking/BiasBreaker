@@ -58,6 +58,7 @@ const TopArticleList = () => {
         } catch (err) {
             setError('Failed to fetch summary.');
         } finally {
+          
         }
     };
 
