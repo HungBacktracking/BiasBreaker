@@ -22,5 +22,4 @@ flask_jwt_extended==4.6.0
 flask-cors
 numpy
 pandas
-torch
 scikit-learn
