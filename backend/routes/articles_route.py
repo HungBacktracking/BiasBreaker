@@ -25,6 +25,7 @@ from controllers.articles_controller import (
     get_top_keywords_and_articles,
     get_latest_paper_by_keywords,
     get_latest_top_keywords_of_nearest_day,
+    get_predict_by_keywords_and_date,
 )
 
 article = Blueprint("article", __name__)
@@ -64,9 +65,11 @@ def get_prediction_route():
 def get_recommendation_route():
     return get_recommendation(request.json)
 
+
 @article.route("/get_recommendation_related", methods=["POST"])
 def get_recommendation_related_route():
     return get_recommendation_related(request.json)
+
 
 @article.route(
     "/articles/publisher/<publisher_name>/category/<category>", methods=["GET"]
@@ -111,9 +114,11 @@ def get_article_by_keywords_in_title_route(date1, date2, keywords, category, pub
 def get_latest_article_route(category):
     return get_latest_article(category)
 
+
 @article.route("/articles/latest/related/category/<category>", methods=["GET"])
 def get_latest_and_related_with_category_route(category):
     return get_latest_and_related_with_category(category)
+
 
 @article.route("/articles/date-latest/latest-related/", methods=["GET"])
 def get_latest_and_relate():
@@ -161,3 +166,8 @@ def get_latest_paper_by_keywords_route(keywords, limit):
 @article.route("/articles/keywords-paper/number-of-day/<num>/limit/<limit>")
 def get_latest_top_keywords_of_nearest_day_route(limit, num):
     return get_latest_top_keywords_of_nearest_day(int(limit), int(num))
+
+
+@article.route("/articles/predict-top-keywords-title/date/<date>")
+def get_predict_by_keywords_and_date_route(date):
+    return get_predict_by_keywords_and_date(date, 10)

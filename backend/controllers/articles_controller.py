@@ -46,6 +46,7 @@ def get_recommendation(request):
 
     return jsonify({"articles": ans})
 
+
 def get_recommendation_related(request):
     user_email = request.get("email")
     user = User.find_one(user_email)
@@ -155,6 +156,7 @@ def get_latest_and_related():
     articles = Article.find_top_latest_and_top_related(3)
     return jsonify({"articles": articles})
 
+
 def get_latest_and_related_with_category(category):
     articles = Article.find_top_latest_and_top_related_with_category(category)
     return jsonify({"articles": articles})
@@ -190,3 +192,8 @@ def get_latest_paper_by_keywords(keywords, limit):
 def get_latest_top_keywords_of_nearest_day(limit, numbers_of_day):
     keywords = Article.find_latest_top_keywords_of_nearest_day(limit, numbers_of_day)
     return jsonify({"keywords": keywords})
+
+
+def get_predict_by_keywords_and_date(date, limit):
+    predict = Article.find_predict_by_keywords_and_date(date, limit)
+    return jsonify({"Predictions": predict})

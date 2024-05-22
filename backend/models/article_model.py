@@ -4,8 +4,10 @@ from datetime import datetime, timedelta
 from bson.regex import Regex
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from LLM_Models.model import Predictor
 
 articles = db["articles"]
+predicts = db["predictions"]
 
 
 class Article:
@@ -352,3 +354,41 @@ class Article:
         format_time = latest_day.strftime("%d-%m-%Y")
         old_date = (latest_day - timedelta(days=numbers_of_day)).strftime("%d-%m-%Y")
         return Article.find_top_keywords_and_articles(old_date, format_time, limit)
+
+    @staticmethod
+    def find_predict_by_keywords_and_date(date, limit):
+        formatted_date = datetime.strptime(date, "%d-%m-%Y")
+        data_prediction = predicts.find_one({"datetime": formatted_date})
+        if data_prediction:
+            return data_prediction["prediction"]
+        predicts_data = {}
+        publisher = "all"
+        dict_key = Article.count_keywords(date, date, publisher)
+        sorted_dict = dict(sorted(dict_key.items(), key=lambda item: item[1]))
+        i = 0
+        top_list_keyword = []
+        title_and_content = []
+        for key, val in reversed(sorted_dict.items()):
+            if i == 0:
+                i += 1
+                continue
+            top_list_keyword.append(key)
+            article = articles.find_one(
+                {
+                    "datetime": formatted_date,
+                    "keywords": {"$regex": key, "$options": "i"},
+                }
+            )
+            title_and_content.append(article["title"] + article["content"])
+            i += 1
+            if i == limit + 1:
+                break
+        predictor = Predictor()
+        prediction = predictor.predict_from_keywords(
+            top_list_keyword, title_and_content
+        )
+        predicts_data["keywords"] = top_list_keyword
+        predicts_data["datetime"] = formatted_date
+        predicts_data["prediction"] = prediction
+        predicts.insert_one(predicts_data)
+        return prediction
