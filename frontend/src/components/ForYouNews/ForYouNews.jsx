@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import classes from './ForYouNews.module.css';
 import Title from '../MainNews/Title/Title';
 import CategoryNewsItem from '../CategoryNews/CategoryNewsItem';
+import Loading from '../Loading/Loading';
+import axios from 'axios';
 
 
 const sampleData = [
@@ -49,24 +51,45 @@ const sampleData = [
 
 
 const ForYouNews = () => {
+	const [isLoading, setIsLoading] = useState(true);
     const [articleList, setArticleList] = useState([]);
 
     useEffect(() => {
-        const filteredArticles = sampleData;
-        setArticleList(filteredArticles);
-    }, [articleList]);
+		setIsLoading(true);
+		const fetchRecommendations = async (email) => {
+            try {
+                const response = await axios.post('http://localhost:5000/get_recommendation_related', {
+                    email: email
+                
+                });
+                setArticleList(response.data.articles);
+                console.log("Recommendation");
+                console.log(response.data.articles);
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+		const email = localStorage.getItem('email');
+        if (email) fetchRecommendations(email);
+    }, []);
 
     
     return (
         <div className={classes.full_height}>
+			<Loading isLoading={isLoading} />
 			<main className={classes.main_container}>
 				<div className={classes.news}>
 						<Title	name="Dành cho bạn" description="Đề xuất dựa trên sở thích của riêng bạn"/>
-                        <div className={classes.news_list}>
-                            {articleList.map(article => (
-                                <CategoryNewsItem key={article.id} article={article} />
-                            ))}
-                        </div>
+						{ isLoading ? <></> : (
+							<div className={classes.news_list}>
+								{articleList.map(article => (
+									<CategoryNewsItem key={article._id} article={article} />
+								))}
+							</div>
+						)}
 				</div>
 			</main>
 		</div>

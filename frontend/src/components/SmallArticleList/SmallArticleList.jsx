@@ -60,10 +60,11 @@ const SmallArticleList = ({ isForYou }) => {
                     email: email
                 
                 });
-                setArticles(response.data.articles);
+                setArticles(response.data.articles.slice(0, 3));
+                console.log("Recommendation");
                 console.log(response.data.articles);
             } catch (err) {
-                
+                console.log(err);
             } finally {
                 
             }
