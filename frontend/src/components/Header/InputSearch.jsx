@@ -1,17 +1,25 @@
 import classes from './Header.module.css';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function InputSearch() {
   const [input, setInput] = useState('');
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setInput('');
+    navigate(`/keyword/${input}`);
+  }
+
   return (
     <>
       <div className={classes.search_noti}>
-        <form method="post" action="/search">
+        <form onSubmit={handleSubmit} action="">
           <div className={`${classes.the_input_search} ${classes.ml_6}`}>
             <div className={classes.t_popper}>
               <div className={classes.t_popper__trigger}>

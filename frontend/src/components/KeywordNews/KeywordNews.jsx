@@ -84,7 +84,7 @@ const KeywordNews = ({ keyword }) => {
             }
         }
         fetchArticles();
-    }, []);
+    }, [keyword]);
 
     return (
         <div className={classes.full_height}>
