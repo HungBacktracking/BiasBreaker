@@ -64,7 +64,7 @@ const ForYouArticleList = () => {
 		setIsLoading(true);
 		const fetchRecommendations = async (email) => {
             try {
-                const response = await axios.post('http://localhost:5000/get_recommendation', {
+                const response = await axios.post('https://biasbreaker.onrender.com/get_recommendation', {
                     email: email
                 
                 });
