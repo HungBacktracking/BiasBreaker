@@ -67,8 +67,7 @@ def get_recommendation_related(request):
     return jsonify({"articles": ans})
 
 
-def get_prediction(request):
-    article_id = request.get("id")
+def get_prediction(article_id):
     article = Article.find_one(article_id)
 
     if not article:
@@ -78,14 +77,15 @@ def get_prediction(request):
 
     predictor = Predictor()
     prediction = predictor.predict_from_article(article["content"])
+
+    article["_id"] = ObjectId(article["_id"])
     article["prediction"] = prediction
     Article.update_article(article_id, article)
 
     return jsonify({"message": "Prediction generated", "prediction": prediction})
 
 
-def get_summary(request):
-    article_id = request.get("id")
+def get_summary(article_id):
     article = Article.find_one(article_id)
 
     if not article:
@@ -94,7 +94,13 @@ def get_summary(request):
         return jsonify({"summary": article["summary"]}), 200
 
     summarizer = TextSummarizer()
-    summary = summarizer.summarize(article["content"])
+
+    easy = summarizer.summarize(article["content"], "easy")
+    normal = summarizer.summarize(article["content"], "normal")
+    detailed = summarizer.summarize(article["content"], "detailed")
+
+    article["_id"] = ObjectId(article["_id"])
+    summary = {"easy": easy, "normal": normal, "detailed": detailed}
     article["summary"] = summary
     Article.update_article(article_id, article)
 

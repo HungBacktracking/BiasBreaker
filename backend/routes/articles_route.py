@@ -51,14 +51,14 @@ def get_all_article_by_publisher_route(publisher_name):
     return get_all_article_by_publisher(publisher_name)
 
 
-@article.route("/get_summary", methods=["POST"])
-def get_summary_route():
-    return get_summary(request.json)
+@article.route("/get_summary/<article_id>", methods=["GET"])
+def get_summary_route(article_id):
+    return get_summary(article_id)
 
 
-@article.route("/get_prediction", methods=["POST"])
-def get_prediction_route():
-    return get_prediction(request.json)
+@article.route("/get_prediction/<article_id>", methods=["GET"])
+def get_prediction_route(article_id):
+    return get_prediction(article_id)
 
 
 @article.route("/get_recommendation", methods=["POST"])

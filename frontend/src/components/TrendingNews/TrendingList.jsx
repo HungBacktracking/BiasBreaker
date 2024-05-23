@@ -19,7 +19,7 @@ const TrendingList = ({ trendingList }) => {
         return `${day}-${month}-${year}`;
     }
 
-    const fetchArticles = async () => {
+    const fetchPrediction = async () => {
         try {
             const response = await axios.get(`https://biasbreaker.onrender.com/articles/predict-top-keywords-title/date/${formatDate(trendingList.datetime)}`,);
             setPredictionText(response.data.Predictions);
@@ -33,7 +33,7 @@ const TrendingList = ({ trendingList }) => {
 
     const handlePrediction = async () => {
         setLoading(`${classes.spinner_border}`);
-        await fetchArticles();
+        await fetchPrediction();
         setLoading(`${classes.none} ${classes.spinner_border}`);
         console.log(predictionText);
     }
@@ -75,7 +75,7 @@ const TrendingList = ({ trendingList }) => {
                                 </div>
                             </div>
                             <div className={classes.trending_frequency}>
-                                <div className={classes.frequency_top}>{article.frequency}</div>
+                                <div className={classes.frequency_top}>{article.frequency} N</div>
                                 <div className={classes.frequency_bottom}>lượt quan tâm</div>
                             </div>
                             <img className={classes.trending_img} src={article.article.image.url_link} alt="Ảnh bài báo" />
