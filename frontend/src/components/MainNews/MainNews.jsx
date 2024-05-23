@@ -15,7 +15,7 @@ function MainNews() {
 		<div className={classes.full_height}>
 			<main className={classes.main_container}>
 				<div className={classes.news}>
-						<Title	name="Báo chí hôm nay" description="Thứ Ba, 21 tháng 5"/>
+						<Title	name="Báo chí hôm nay" description="Thứ Tư, 22 tháng 5"/>
 						<div className={classes.news_list}>
 							<div className={classes.top_news}>
 								<Heading title='Tin tức hàng đầu'/>
