@@ -78,7 +78,7 @@ const TrendingList = ({ trendingList }) => {
                                 <div className={classes.frequency_top}>{article.frequency} N</div>
                                 <div className={classes.frequency_bottom}>lượt quan tâm</div>
                             </div>
-                            <img className={classes.trending_img} src={article.article.image.url_link} alt="Ảnh bài báo" />
+                            <img className={classes.trending_img} src={article.article.image.url_link} alt="Ảnh bài báo" loading='lazy'/>
                         </Link>
                     ))}
                 </div>

@@ -139,28 +139,31 @@ const ArticleDetail = ({ article_id }) => {
 					</div>
 					<div className={classes.title_wrapper}>
 						<h1 className={classes.title}>{article.title}</h1>
-						<img className={classes.publisher} src={article.publisher_logo} alt="Publisher Logo" />
+						{article.publisher_logo && <img className={classes.publisher} src={article.publisher_logo} alt="Publisher Logo" />}
 					</div>
-					{article.image && article.image.url_link && (
-                        <div className={classes.image}>
-                            <img className={classes.image_main} src={article.image.url_link} alt="Image of article" />
-                            <div className={classes.image_content}>{article.image.description}</div>
-                        </div>
-                    )}
-
-					<div className={classes.summary}>
-						<div className={classes.choose}>
-							<div onClick={handleEasy} className={`${easy}`}>Ngắn gọn</div>
-							<div className={classes.separate_option}> </div>
-							<div onClick={handleMedium} className={`${medium}`}>Trung bình</div>
-							<div className={classes.separate_option}> </div>
-							<div onClick={handleHard} className={`${hard}`}>Chi tiết</div>
-						</div>
-						<div onClick={handleFull} className={classes.original}>Đọc nội dung gốc</div>
-					</div>
-					{summary.map((paragraph, index) => (
-						<ReactMarkdown key={index} className={classes.content}>{paragraph}</ReactMarkdown>
-					))}
+					{article.image && article.image.url_link ? (
+						<>
+							<div className={classes.image}>
+								<img className={classes.image_main} src={article.image.url_link} alt="Image of article" loading='lazy' />
+								<div className={classes.image_content}>{article.image.description}</div>
+							</div>
+							<div className={classes.summary}>
+								<div className={classes.choose}>
+									<div onClick={handleEasy} className={`${easy}`}>Ngắn gọn</div>
+									<div className={classes.separate_option}> </div>
+									<div onClick={handleMedium} className={`${medium}`}>Trung bình</div>
+									<div className={classes.separate_option}> </div>
+									<div onClick={handleHard} className={`${hard}`}>Chi tiết</div>
+								</div>
+								<div onClick={handleFull} className={classes.original}>Đọc nội dung gốc</div>
+							</div>
+							{summary.map((paragraph, index) => (
+								<ReactMarkdown key={index} className={classes.content}>{paragraph}</ReactMarkdown>
+							))}
+						</>
+                    ) : (
+						<></>
+					)}
 					
 				</div>
             </div>
