@@ -25,3 +25,4 @@ pandas
 scikit-learn
 IPython
 google-generativeai
+python-dotenv
